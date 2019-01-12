@@ -1,5 +1,7 @@
 {
   "name": "firstjob",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

@@ -14,7 +14,13 @@ const routes: Routes = [
   {
     path: 'list',
     loadChildren: './list/list.module#ListPageModule'
-  }
+  },
+  { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
+  { path: 'registrar', loadChildren: './registrar/registrar.module#RegistrarPageModule' },
+  { path: 'userProfile', loadChildren: './user-profile/user-profile.module#UserProfilePageModule' },
+  { path: 'plazas', loadChildren: './plazas/plazas.module#PlazasPageModule' },
+  { path: 'oferta', loadChildren: './oferta/oferta.module#OfertaPageModule' },
+  { path: 'curriculum', loadChildren: './curriculum/curriculum.module#CurriculumPageModule' },
 ];
 
 @NgModule({

@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+<ion-card >
+
+  <ion-card-header>
+    Ingreso de Usuarios
+  </ion-card-header>
+
+  <ion-card-content >
+    <p>Ingresa con tu correo electrónico y contraseña de la plataforma.</p>
+  	<ion-item>
+  		<ion-input #correo="ngModel" type="email" required [(ngModel)]="email" placeholder="email@servicio.com" ></ion-input>
+  	</ion-item>
+  	<ion-item>
+  		<ion-input #clave="ngModel" type="password" required [(ngModel)]="contrasena" placeholder="Contraseña"></ion-input>
+  	</ion-item>
+  	<ion-item>
+  		<ion-button color="primary" (click)="On_Login_With_Password_Click()" enabled="correo.valid && clave.valid" >Ingresar</ion-button>&nbsp;<a href="/registrar" >Crear Cuenta</a>
+  	</ion-item>
+    <ion-item>
+      <ion-button [routerLink]="'reset'" color="medium" >Renueva Tu Contraseña</ion-button>
+    </ion-item>
+    
+  </ion-card-content>
+
+</ion-card>
+<ion-card>
+
+  <ion-card-header>
+    Ingresa con tus Redes Sociales
+  </ion-card-header>
+
+  <ion-card-content>
+    <ion-list>
+      <ion-item>
+        <ion-buttons>
+          <ion-button fill="solid" color="secondary" (click)="On_Login_With_Twitter_Click()" slot="secondary">
+          Twitter <ion-icon name="logo-twitter"></ion-icon>
+        </ion-button>
+        <ion-button fill="solid" slot="primary" (click)="On_Login_With_Facebook_Click()" color="primary">
+          Facebook <ion-icon name="logo-facebook"></ion-icon>
+        </ion-button>
+        </ion-buttons>
+      </ion-item>
+    </ion-list>
+  </ion-card-content>
+
+</ion-card>
+</ion-content>
