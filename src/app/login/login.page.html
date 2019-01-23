@@ -21,10 +21,10 @@
   		<ion-input #clave="ngModel" type="password" required [(ngModel)]="contrasena" placeholder="Contraseña"></ion-input>
   	</ion-item>
   	<ion-item>
-  		<ion-button color="primary" (click)="On_Login_With_Password_Click()" enabled="correo.valid && clave.valid" >Ingresar</ion-button>&nbsp;<a href="/registrar" >Crear Cuenta</a>
+  		<ion-button color="primary" (click)="On_Login_With_Password_Click()" enabled="correo.valid && clave.valid" >Ingresar</ion-button>&nbsp;<a [routerLink]="['/registrar']" >Crear Cuenta</a>
   	</ion-item>
     <ion-item>
-      <ion-button [routerLink]="'reset'" color="medium" >Renueva Tu Contraseña</ion-button>
+      <ion-button [routerLink]="['reset']" color="medium" >Renueva Tu Contraseña</ion-button>
     </ion-item>
     
   </ion-card-content>

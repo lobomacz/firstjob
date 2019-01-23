@@ -6,21 +6,42 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { UserProfilePage } from './user-profile.page';
+import { PopoverComponent } from './popover/popover.component';
+import { ActualizarComponent } from './actualizar/actualizar.component';
 
 const routes: Routes = [
   {
     path: '',
+    redirectTo: 'ver',
+    pathMatch: 'full'
+  },
+  {
+    path: 'nuevo/:tipo/:id',
+    redirectTo: 'actualizar/:tipo/:id',
+    pathMatch: 'full'
+  },
+  {
+    path: 'actualizar/:tipo/:id',
+    component: ActualizarComponent
+  },
+  {
+    path: 'ver',
+    component: UserProfilePage
+  },
+  {
+    path: 'ver/:id',
     component: UserProfilePage
   }
 ];
 
 @NgModule({
+  entryComponents:[PopoverComponent],
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [UserProfilePage]
+  declarations: [UserProfilePage, PopoverComponent, ActualizarComponent]
 })
 export class UserProfilePageModule {}

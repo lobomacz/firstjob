@@ -1,4 +1,4 @@
-export class Convocatoria {
+export class Plaza {
 
 	idEmpleador:string;
 	titulo:string;
@@ -6,6 +6,7 @@ export class Convocatoria {
 	descripcion:string;
 	categoria:number;
 	fechaPublicacion:string;
+	emailPublicador:string;
 	fechaLimite:string;
 	contacto:any;
 	documento:string;
@@ -21,6 +22,7 @@ export class Convocatoria {
 				sector,
 				categoria,
 				fechaPublicacion,
+				emailPublicador,
 				fechaLimite,
 				contacto,
 				documento,
@@ -33,6 +35,7 @@ export class Convocatoria {
 			this.descripcion = descripcion;
 			this.categoria = categoria;
 			this.fechaPublicacion = fechaPublicacion;
+			this.emailPublicador = emailPublicador;
 			this.contacto = contacto;
 			this.documento = documento;
 			this.abierta = abierta;
@@ -45,7 +48,12 @@ export class Convocatoria {
 			this.descripcion = '';
 			this.categoria = null;
 			this.fechaPublicacion = '';
-			this.contacto = null;
+			this.emailPublicador = '';
+			this.contacto = {
+				'nombre':'',
+				'telefono':'',
+				'email': ''
+			};
 			this.documento = '';
 			this.abierta = null;
 			this.aplicantes = [];

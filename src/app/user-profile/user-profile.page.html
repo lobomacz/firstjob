@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-title>Perfil de Usuario</ion-title>
     <ion-buttons slot="end">
-	  	<ion-button (click)="UserActionView()" >
+	  	<ion-button (click)="UserPopover()" >
 	  		<ion-icon name="more"></ion-icon>
 	  	</ion-button>
 	  </ion-buttons>
@@ -11,8 +11,25 @@
 </ion-header>
 
 <ion-content padding>
-<ion-card *ngIf="tipoUsuario === 'candidato'">
-	<ion-img [src]="{{ imageFile }}"></ion-img>
+
+<ion-card *ngIf="sinPerfil">
+
+  <ion-card-header>
+    <ion-card-title>Sin Perfil de Usuario</ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    <p>No ha creado un perfil para su usuario o empresa.</p>
+    <p>Presione el icono <ion-icon name="more"></ion-icon> para ver el menú de creación de perfil.</p>
+  </ion-card-content>
+
+</ion-card>
+  
+<ion-card *ngIf="tipoUsuario === 'usuario' && usuario != null">
+  <div class="foto-container">
+    <ion-img [src]="imageFile"></ion-img>
+  </div>
+	
   <ion-card-header>
     <ion-card-title>{{ usuario.primerNombre + ' ' + usuario.primerApellido | uppercase }}</ion-card-title>
     <ion-card-subtitle>{{ usuario.email }}</ion-card-subtitle>
@@ -28,10 +45,13 @@
 	<ion-text color="primary">
   		<h3>Dirección</h3>
   	</ion-text>
-  	<p>{{ usuario.direccion }}</p>
+  	<p>{{ usuario.direccion | uppercase }}</p>
 	<ion-text color="primary"><h3>Teléfonos</h3></ion-text>
 	<ion-text *ngFor="let tel of usuario.telefonos">
-		<ion-icon name="tel.tipo"></ion-icon><p>{{ tel.numero }}</p>
+    <p>
+      <ion-icon name="{{ tel.tipo }}"></ion-icon>   {{ tel.numero }}
+    </p>
+		
 	</ion-text>
 	<ion-text color="primary">
 		<h3>Profesión</h3>
@@ -40,11 +60,11 @@
 	<ion-text color="primary">
 		<h3>Nivel Académico</h3>
 	</ion-text>
-	<p>{{ usuario.nivelAcademico | uppercase }}</p>
+	<p>{{ userNivel | uppercase }}</p>
 	<ion-text color="primary">
 		<h3>Sector de Desarrollo</h3>
 	</ion-text>
-	<p>{{ usuario.sector | uppercase }}</p>
+	<p>{{ userSector | uppercase }}</p>
 	<ion-text color="primary">
 		<h3>Redes Sociales</h3>
 	</ion-text>
@@ -54,7 +74,7 @@
 	<ion-text color="primary">
     <h3>Etnia</h3>
   </ion-text>
-  <p>{{ usuario.etnia | uppercase }}</p>
+  <p>{{ userEtnia | uppercase }}</p>
   <ion-text color="primary">
     <h3>Sexo</h3>
   </ion-text>
@@ -62,13 +82,16 @@
   </ion-card-content>
 
 </ion-card>
-<ion-card *ngIf="tipoUsuario === 'empleador'">
+
+<ion-card *ngIf="tipoUsuario === 'empleador' && empleador != null">
 
   <ion-card-header>
     <ion-card-title>{{ empleador.nombreCorto }}</ion-card-title>
     <ion-card-subtitle>{{ empleador.nombreLargo }}</ion-card-subtitle>
   </ion-card-header>
-  <ion-img [src]="{{ imageFile }}"></ion-img>
+  <div class="foto-container">
+    <ion-img [src]="imageFile"></ion-img>
+  </div>
   <ion-card-content>
     <ion-text color="primary">
       <h3>Dirección</h3>
@@ -87,11 +110,11 @@
     </ion-text>
     <p>{{ empleador.web }}</p>
     <ion-item>
-      <ion-label text-wrap>
+      <ion-label *ngIf="empleador.representante != null" text-wrap>
         <ion-text color="primary">
           <h3>Representante</h3>
         </ion-text>
-        <p>{{ empleador.representante.nombre }}</p>
+        <p>{{ empleador.representante.nombre | uppercase }}</p>
         <p>{{ empleador.representante.email }}</p>
         <p>{{ empleador.representante.telefono }}</p>
       </ion-label>
@@ -107,20 +130,7 @@
       </ion-label>
     </ion-item>
     <h4>Sector Económico</h4>
-    <p>{{ empleador.sector | uppercase }}</p>
-  </ion-card-content>
-
-</ion-card>
-
-<ion-card *ngIf="tipoUsuario === 'desconocido'">
-
-  <ion-card-header>
-    Sin Perfil de Usuario
-  </ion-card-header>
-
-  <ion-card-content>
-    <p>No ha creado un perfil para su usuario o empresa.</p>
-    <p>Presione el icono <ion-icon name="more"></ion-icon> para ver el menú de creación de perfil.</p>
+    <p>{{ userSector | uppercase }}</p>
   </ion-card-content>
 
 </ion-card>

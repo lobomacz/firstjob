@@ -1,0 +1,4 @@
+
+<ion-list>
+	<ion-item *ngFor="let opcion of opciones" (click)="Dismiss()" [routerLink]="[opcion.link]" >{{ opcion.title | uppercase }}</ion-item>
+</ion-list>

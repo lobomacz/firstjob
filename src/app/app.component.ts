@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+import { Router, ActivatedRoute } from '@angular/router';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
@@ -8,7 +8,7 @@ import { UserService } from './services/user.service';
 
 import { User } from 'firebase';
 
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -21,12 +21,105 @@ export class AppComponent {
   private userValid:boolean;
   private userEmail:string;
   private uid:string;
+  
+
+  private pages:any = {
+    'invitado':[
+      {
+        title: 'Inicio',
+        url: '/home',
+        icon: 'home'
+      },
+      {
+        title:'Ingresar',
+        url:'/login',
+        icon:'log-in'
+      },
+      {
+        title: 'Registrate',
+        url: '/registrar',
+        icon: 'create'
+      }
+    ],
+    'usuario':[
+      {
+        title: 'Inicio',
+        url: '/home',
+        icon: 'home'
+      },
+      {
+        title: 'Plazas',
+        url: '/plazas',
+        icon: 'filing'
+      },
+      {
+        title: 'Convocatorias',
+        url: '/oferta',
+        icon: 'megaphone'
+      },
+      {
+        title: 'Perfil',
+        url:'/userProfile',
+        icon: 'contact'
+      }, {
+        title: 'Curriculo',
+        url:'/curriculum',
+        icon: 'briefcase'
+      }
+    ],
+    'empleador':[
+      {
+        title: 'Inicio',
+        url: '/home',
+        icon: 'home'
+      },
+      {
+        title: 'Plazas',
+        url: '/plazas',
+        icon: 'filing'
+      },
+      {
+        title: 'Convocatorias',
+        url: '/oferta',
+        icon: 'megaphone'
+      },
+      {
+        title: 'Perfil',
+        url:'/userProfile',
+        icon: 'contact'
+      }
+    ],
+    'admin':[
+      {
+        title: 'Inicio',
+        url: '/home',
+        icon: 'home'
+      },
+      {
+        title: 'Convocatorias',
+        url: '/oferta',
+        icon: 'megaphone'
+      },
+      {
+        title: 'Opciones',
+        url: '/administrar',
+        icon: 'build'
+      },
+      {
+        title: 'Credenciales',
+        url: '/credenciales',
+        icon: 'key'
+      }
+    ]
+  };
 
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private uService:UserService
+    private uService:UserService,
+    private _router:Router,
+    private _route:ActivatedRoute
   ) {
     this.initializeApp();
   }
@@ -36,135 +129,84 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
-    this.llenaOpcionesDeMenu();
-  }
 
-  llenaOpcionesDeMenu(){
-    this.uService.userSubject.subscribe({
-      next: (v) => {
-        if(v == null && this.appPages == undefined){
-          this.userValid = false;
-          this.appPages = [
-            {
-              title: 'Inicio',
-              url: '/home',
-              icon: 'home'
-            },
-            {
-              title:'Ingresar',
-              url:'/login',
-              icon:'log-in'
-            },
-            {
-              title: 'Registrate',
-              url: '/registrar',
-              icon: 'create'
-            }
-          ];
-        }else if(v != null){
-          this.uid = v.uid;
-          this.userValid = true;
-          if (this.appPages == undefined) {
-            this.appPages = [
-              {
-                title: 'Inicio',
-                url: '/home',
-                icon: 'home'
-              },
-              {
-                title: 'Plazas',
-                url: '/plazas',
-                icon: 'filing'
-              },
-              {
-                title: 'Convocatorias',
-                url: '/oferta',
-                icon: 'megaphone'
-              }
-            ];
-
-          }else{
-            this.appPages.pop();
-            this.appPages.pop();
-
-            this.appPages.push(
-                {
-                  title: 'Plazas',
-                  url: '/plazas',
-                  icon: 'filing'
-                },
-                {
-                  title: 'Convocatorias',
-                  url: '/oferta',
-                  icon: 'megaphone'
-                }
-              );
-          }
-          this.uService.IsCandidate(this.uid).subscribe((res) => {
-            
-            if(res.ok && res.json() != null){
-
-              if(res.json().count > 0){
-
-                this.appPages.splice(2, 0, {
-                  title: 'Perfil',
-                  url:'/userProfile',
-                  icon: 'contact'
-                }, {
-                  title: 'Curriculo',
-                  url:'/curriculum',
-                  icon: 'briefcase'
-                });
-
-              }else{
-                this.uService.IsEmployer(this.uid).subscribe((r) => {
-
-                  if(r.ok && r.json() != null){
-
-                    if(r.json().count > 0){
-
-                      this.appPages.splice(2, 0, {
-                        title: 'Perfil',
-                        url:'/userProfile',
-                        icon: 'contact'
-                      });
-
-                    }
-                  }
-
-                });
-              }
-
-            }
-          });
-        }else{
-          this.userValid = false;
-          this.appPages.splice(1,4,{
-              title:'Ingresar',
-              url:'/login',
-              icon:'log-in'
-            },
-            {
-              title: 'Registrate',
-              url: '/registrar',
-              icon: 'create'
-            });
-          
-        }
-      }
-    });
 
     this.uService.GetCurrentUser().subscribe((u) => {
-      if(u != null){
-        this.userEmail = u.email;
-      }
-      this.uService.userSubject.next(u);
+      
+      this.llenaOpcionesDeMenu(u);
+
     });
+    
+    
   }
 
+  llenaOpcionesDeMenu(v:User){
+
+    if(v != null){
+      
+      this.uid = v.uid;
+      this.userValid = true;
+      this.userEmail = v.email;
+
+      this.uService.IsAdmin(this.uid).subscribe((u) => {
+        
+        if(u.key != null){
+          this.appPages = this.pages.admin;
+          
+        }else{
+          
+        }
+      });
+
+      this.uService.IsCandidate(this.uid).subscribe((res) => {
+        
+        if(res.ok && res.json().count > 0){
+          this.appPages = this.pages.usuario;
+          
+        }else if(res.ok && res.json().count == 0){
+          
+        }
+      });
+
+      this.uService.IsEmployer(this.uid).subscribe((r) => {
+        
+        if(r.ok && r.json().count > 0){
+          this.appPages = this.pages.empleador;
+          
+        }
+      });
+
+
+    }else {
+      
+      this.uid = '';
+      this.userValid = false;
+      this.appPages = this.pages.invitado;
+    }
+
+    
+    
+  }
+
+
+
   UserLogout(){
-    this.uService.Logout(this.uid);
-    this.llenaOpcionesDeMenu();
+    this.uService.Logout(this.uid).then(() => {
+
+      this.uService.UserAudit(this.uid,'logout');
+
+      this.uService.GetCurrentUser().subscribe((u) => {
+
+        this.GoHome();
+
+      });
+
+      
+      
+    }).catch((err) => {
+      console.log(err.message);
+    });
+    
   }
 
   ionViewDidLoad(){
@@ -177,5 +219,9 @@ export class AppComponent {
 
   ionViewCanEnter(){
     console.log('ionViewCanEnter');
+  }
+
+  GoHome(){
+    this._router.navigateByUrl('/home');
   }
 }

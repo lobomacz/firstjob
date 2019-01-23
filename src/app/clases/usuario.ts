@@ -6,6 +6,7 @@ export class Usuario {
 	primerApellido:string;
 	segundoApellido:string;
 	fechaNacimiento:string;
+	fechaIngreso:string;
 	email:string;
 	sexo:string;
 	etnia:string;
@@ -20,7 +21,7 @@ export class Usuario {
 	activo:boolean;
 	_id:string;
 
-	constructor(datos?:any, Foto:string = 'users_data/img/unknown-user.png'){
+	constructor(datos?:any, Foto:string = '/usuarios/img/unknown-user.png'){
 		if(datos != null){
 			const {
 				foto,
@@ -29,6 +30,7 @@ export class Usuario {
 				primerApellido,
 				segundoApellido,
 				fechaNacimiento,
+				fechaIngreso,
 				email,
 				sexo,
 				etnia,
@@ -50,6 +52,7 @@ export class Usuario {
 			this.primerApellido = primerApellido;
 			this.segundoApellido = segundoApellido;
 			this.fechaNacimiento = fechaNacimiento;
+			this.fechaIngreso = fechaIngreso;
 			this.email = email;
 			this.sexo = sexo;
 			this.etnia = etnia;
@@ -72,6 +75,7 @@ export class Usuario {
 			this.primerApellido = '';
 			this.segundoApellido = '';
 			this.fechaNacimiento = '';
+			this.fechaIngreso = '';
 			this.email = '';
 			this.sexo = '';
 			this.etnia = '';

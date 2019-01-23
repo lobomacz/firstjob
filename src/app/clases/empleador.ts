@@ -13,8 +13,10 @@ export class Empleador {
 	linkedin:string;
 	sector:string;
 	_id:string;
+	activo:boolean;
+	fechaIngreso:string;
 
-	constructor(datos?:any, Logo:string='users_data/img/no-image.jpg'){
+	constructor(datos?:any, Logo:string='/empleadores/img/unknown-logo.jpg'){
 		if(datos != null){
 			const {
 				logo,
@@ -29,7 +31,9 @@ export class Empleador {
 				twitter,
 				linkedin,
 				sector,
-				_id
+				_id,
+				activo,
+				fechaIngreso
 			} = datos;
 
 			this.logo = logo;
@@ -45,6 +49,8 @@ export class Empleador {
 			this.linkedin = linkedin;
 			this.sector = sector;
 			this._id = _id;
+			this.activo = activo;
+			this.fechaIngreso = fechaIngreso;
 
 		}else{
 
@@ -55,12 +61,14 @@ export class Empleador {
 			this.telefono = '';
 			this.email = '';
 			this.web = '';
-			this.representante = null;
+			this.representante = {'nombre':'', 'telefono': '', 'email': ''};
 			this.facebook = '';
 			this.twitter = '';
 			this.linkedin = '';
 			this.sector = '';
 			this._id = '';
+			this.activo = false;
+			this.fechaIngreso = '';
 
 		}
 	}

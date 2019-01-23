@@ -9,30 +9,44 @@
 	<ion-card>
 	
 	  <ion-card-header>
-	    Registro de Usuario
+	  	<ion-card-title>Registro de Usuario</ion-card-title>
 	  </ion-card-header>
 	
 	  <ion-card-content>
-	    Registra tu dirección de correo y una contraseña para ingresar a la plataforma.
+	    <p>Registra tu dirección de correo y una contraseña para ingresar a la plataforma.</p>
+	    <ion-list>
+			<ion-item>
+				<ion-input type="email" #correo="ngModel" name="correoe" placeholder="Correo-e" [(ngModel)]="email" required ></ion-input>
+			</ion-item>
+			<ion-item>
+				<ion-input type="password" #contrasena="ngModel" minlength="8" name="contrasena" placeholder="Contraseña" [(ngModel)]="password" required></ion-input>
+			</ion-item>
+			<ion-item>
+				<ion-input type="password" #contrasena2="ngModel" name="contrasena2" placeholder="Conf. Contraseña" [(ngModel)]="confirma" required ></ion-input>
+			</ion-item>
+			<p>Tipo de Usuario</p>
+			<ion-item>
+				<ion-label>
+					Profesional
+				</ion-label>
+				<ion-toggle #togUsuario="ngModel" [(ngModel)]="esUsuario" (ionChange)="Toggle('usuario')" toggle-class="toggle-calm"></ion-toggle>
+			</ion-item>
+			<ion-item>
+				<ion-label>
+					Empleador
+				</ion-label>
+				<ion-toggle #togEmpleador="ngModel" [(ngModel)]="esEmpleador" (ionChange)="Toggle('empleador')" toggle-class="toggle-calm"></ion-toggle>
+			</ion-item>
+			<ion-item>
+				<ion-button [routerLink]="['/home']" color="danger">Cancelar</ion-button>
+			</ion-item>
+			<ion-item>
+				<ion-button color="primary" [disabled]="!(contrasena.value == contrasena2.value)" (click)="CrearUsuario()" >Enviar</ion-button>
+			</ion-item>
+		</ion-list>
 	  </ion-card-content>
 	
 	</ion-card>
-	<ion-list>
-		<ion-item>
-			<ion-input type="email" name="correoe" placeholder="Correo-e" required="true"></ion-input>
-		</ion-item>
-		<ion-item>
-			<ion-input type="password" minlength="8" name="contrasena" placeholder="Contraseña" required="true"></ion-input>
-		</ion-item>
-		<ion-item>
-			<ion-input type="password" name="contrasena2" placeholder="Conf. Contraseña" ></ion-input>
-		</ion-item>
-		<ion-item>
-			<ion-button color="danger">Cancelar</ion-button>
-		</ion-item>
-		<ion-item>
-			<ion-button color="primary">Enviar</ion-button>
-		</ion-item>
-	</ion-list>
+	
 
 </ion-content>

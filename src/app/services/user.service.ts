@@ -3,32 +3,41 @@ import { Router } from '@angular/router';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase, DatabaseSnapshot, AngularFireAction } from 'angularfire2/database';
-//import { HTTP } from '@ionic-native/http/ngx';
+import { environment } from '../../environments/environment';
 import { User } from 'firebase';
-import { Observable, Subject } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-	public userSubject:Subject<User | null>;
+	
   private uid:string;
+  baseUrl:string = environment.appUrl;
 
   constructor(private _auth:AngularFireAuth, private _db:AngularFireDatabase, private http:Http, private _router:Router) {
-  	this.userSubject = new Subject();
+
   }
 
   GetCurrentUser():Observable<User>{
   	return this._auth.user;
   }
 
-  public SetUid(uid:string){
-    this.uid = uid;
+  GetSectores():Observable<Response>{
+    return this.http.get(this.baseUrl.concat('/sectores'));
   }
 
-  public GetUid(){
-    return this.uid;
+  GetSector(id:string):Observable<Response>{
+    return this.http.get(this.baseUrl.concat('/sectores/', id));
+  }
+
+  GetEtnias():Observable<Response>{
+    return this.http.get(this.baseUrl.concat('/etnias'));
+  }
+
+  GetEtnia(id:string):Observable<Response>{
+    return this.http.get(this.baseUrl.concat('/etnias/', id));
   }
 
   IsAdmin(uid:string):Observable<AngularFireAction<DatabaseSnapshot<any>>>{
@@ -36,11 +45,11 @@ export class UserService {
   }
 
   IsEmployer(uid:string):Observable<Response>{
-    return this.http.get("http://localhost:3000/empleadores/count/".concat(uid));
+    return this.http.get(this.baseUrl.concat("/empleadores/count/", uid));
   }
 
   IsCandidate(uid:string):Observable<Response>{
-    return this.http.get("http://localhost:3000/usuarios/count/".concat(uid));
+    return this.http.get(this.baseUrl.concat("/usuarios/count/", uid));
   }
 
   AdminAudit(_id:string){
@@ -54,13 +63,9 @@ export class UserService {
   	return this._auth.auth.signInWithEmailAndPassword(email, pass);
   }
 
-  Logout(uid:string){
+  Logout(uid:string):Promise<void>{
     
-  	this._auth.auth.signOut().then(() => {
-  		this.UserAudit(uid,'logout');
-  	}).catch((err) => {
-  		
-  	});
+  	return this._auth.auth.signOut();
   }
 
   ResetPassword(email:string):Promise<void>{
@@ -80,17 +85,19 @@ export class UserService {
   		'idUsuario':userId
   	};
 
-  	this.http.post('http://localhost:3000/audit/', datos, options).subscribe((r) => {
-
+  	this.http.post(this.baseUrl.concat('/audit/'), datos, options).subscribe((r) => {
+      console.log('auditado');
+      /*
       this.IsAdmin(userId).subscribe(u => {
-        if(u != null){
-          this.AdminAudit(userId);
-        }
-      });
-  	});
-  }
 
-  GoHome(){
-  	this._router.navigateByUrl('/home');
+        if(u.key != null){
+          this.AdminAudit(userId);
+
+        }
+
+      });
+      */
+
+  	});
   }
 }

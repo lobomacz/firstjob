@@ -1,0 +1,10 @@
+<ion-list>
+	<ion-item *ngFor="let opt of options" [routerLink]="opt.link" (click)="Close()" >
+		{{ opt.title | uppercase }}
+	</ion-item>
+	<ion-item *ngIf="!sinPerfil" (click)="On_Cerrar_Cuenta_Click()" >
+		<ion-label>
+			Cerrar Perfil
+		</ion-label>
+	</ion-item>
+</ion-list>

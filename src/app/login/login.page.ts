@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ToastController } from '@ionic/angular';
-import { Router } from '@angular/router';
+import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { UserService } from '../services/user.service';
@@ -17,8 +17,7 @@ export class LoginPage implements OnInit {
 
 	private email:string;
 	private contrasena:string;
-
-  constructor(private _router:Router, private uService:UserService, private toastCtrl:ToastController) { }
+  constructor(private _router:Router, private _route:ActivatedRoute, private uService:UserService, private toastCtrl:ToastController) { }
 
   ngOnInit() {
   }
@@ -28,11 +27,11 @@ export class LoginPage implements OnInit {
   	if(this.emailField.valid && this.passwordField.valid){
   		
   		this.uService.LoginEmail(this.email,this.contrasena).then((cred) => {
+        
 	  		if(cred != null){
-	  			this.uService.SetUid(cred.user.uid)
 	  			this.uService.UserAudit(cred.user.uid,'login');
-
-	  			this.Redirect();
+          this.Redirect();
+	  			
 	  		}
 	  		
 	  	}).catch((err) => {
@@ -50,6 +49,7 @@ export class LoginPage implements OnInit {
             break;
           
           default:
+            console.log(err.message);
             mensaje = "Correo/Contraseña Incorrectos";
             break;
         }

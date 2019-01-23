@@ -11,7 +11,8 @@ export const environment = {
     projectId: "firstjobapp-ba90d",
     storageBucket: "firstjobapp-ba90d.appspot.com",
     messagingSenderId: "601171084338"
-  }
+  },
+  appUrl:'http://localhost:3000'
 };
 
 /*
