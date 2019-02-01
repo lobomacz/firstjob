@@ -15,8 +15,10 @@ const routes: Routes = [
   { path: 'registrar', loadChildren: './registrar/registrar.module#RegistrarPageModule' },
   { path: 'userProfile', loadChildren: './user-profile/user-profile.module#UserProfilePageModule' },
   { path: 'plazas', loadChildren: './plazas/plazas.module#PlazasPageModule' },
-  { path: 'oferta', loadChildren: './oferta/oferta.module#OfertaPageModule' },
+  { path: 'convocatorias', loadChildren: './convocatorias/convocatorias.module#ConvocatoriasPageModule' },
   { path: 'curriculum', loadChildren: './curriculum/curriculum.module#CurriculumPageModule' },
+  { path: 'credenciales', loadChildren: './credenciales/credenciales.module#CredencialesPageModule' },
+  { path: 'administrar', loadChildren: './administrar/administrar.module#AdministrarPageModule' },
   { path: 'error', loadChildren: './error/error.module#ErrorPageModule' },
   { path: '**', loadChildren: './error/error.module#ErrorPageModule' }
 ];

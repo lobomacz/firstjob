@@ -1,9 +1,10 @@
-export class Noticia {
+export class Convocatoria {
 
 	titulo:string;
 	descripcion:string;
 	idAutor:string;
 	fechaPublicacion:string;
+	timeStamp:number;
 	etiquetas:string[];
 
 	constructor(datos?:any){
@@ -13,6 +14,7 @@ export class Noticia {
 				descripcion,
 				idAutor,
 				fechaPublicacion,
+				timeStamp,
 				etiquetas
 			} = datos;
 
@@ -20,6 +22,7 @@ export class Noticia {
 			this.descripcion = descripcion;
 			this.idAutor = idAutor;
 			this.fechaPublicacion = fechaPublicacion;
+			this.timeStamp = timeStamp;
 			this.etiquetas = etiquetas;
 
 		}else{
@@ -28,6 +31,7 @@ export class Noticia {
 			this.descripcion = '';
 			this.idAutor = '';
 			this.fechaPublicacion = '';
+			this.timeStamp = new Date().getTime();
 			this.etiquetas = [];
 		}
 	}

@@ -4,12 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
+import { Nl2BrPipeModule } from 'nl2br-pipe';
 
 import { PlazasPage } from './plazas.page';
-import { AplicarComponent } from './aplicar/aplicar.component';
 import { PopoverComponent } from './popover/popover.component';
 import { DetalleComponent } from './detalle/detalle.component';
 import { EditarComponent } from './editar/editar.component';
+import { DetallePopoverComponent } from './detalle-popover/detalle-popover.component';
+import { AplicantesComponent } from './aplicantes/aplicantes.component';
 
 const routes: Routes = [
   {
@@ -21,23 +23,28 @@ const routes: Routes = [
     component: DetalleComponent
   },
   {
-    path: 'nuevo',
+    path: ':idEmpleador/nuevo',
     component: EditarComponent
   },
   {
-    path: 'editar/:id',
+    path: 'editar/:idEmpleador/:id',
     component: EditarComponent
+  },
+  {
+    path: ':id/aplicantes',
+    component: AplicantesComponent
   }
 ];
 
 @NgModule({
-  entryComponents:[PopoverComponent],
+  entryComponents:[PopoverComponent, DetallePopoverComponent],
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    Nl2BrPipeModule
   ],
-  declarations: [PlazasPage, AplicarComponent, PopoverComponent, DetalleComponent, EditarComponent]
+  declarations: [PlazasPage, PopoverComponent, DetalleComponent, EditarComponent, DetallePopoverComponent, AplicantesComponent]
 })
 export class PlazasPageModule {}

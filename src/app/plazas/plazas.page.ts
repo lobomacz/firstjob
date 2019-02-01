@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { PopoverController } from '@ionic/angular';
 import { PopoverComponent } from './popover/popover.component';
 import { EmployerService } from './../services/employer.service';
-import { ConvocatoriasService } from './../services/convocatorias.service';
+import { PlazasService } from './../services/plazas.service';
 import { Empleador } from '../clases/empleador';
 import { Plaza } from '../clases/plaza';
 import { Observable, BehaviorSubject } from 'rxjs';
@@ -24,9 +24,15 @@ export class PlazasPage implements OnInit {
 	private filtroPlazas:boolean;
 
 
-  constructor(private _router:Router, private eService:EmployerService, private cService:ConvocatoriasService, private popoverCtrl:PopoverController) { }
+  constructor(
+  	private _router:Router, 
+  	private eService:EmployerService, 
+  	private cService:PlazasService, 
+  	private popoverCtrl:PopoverController) { }
 
   ngOnInit() {
+
+    this.LlenaEmpleadores();
 
   	this.eService.GetCurrentUser().subscribe((user) => {
   		if(user != null){
@@ -44,7 +50,7 @@ export class PlazasPage implements OnInit {
   								if (r.ok && r.json().count > 0) {
   									
   									this.tipo = 'empleador';
-  									this.eService.GetEmpleadorProfile(this.uid).subscribe(e => this.empleador = new Empleador(e.json()));
+  									this.eService.GetEmpleadorProfile(this.uid).subscribe((e) => {this.empleador = new Empleador(e.json())});
   									this.LlenaPlazas();
   								}else{
   									this.Redirect('/error');
@@ -66,18 +72,25 @@ export class PlazasPage implements OnInit {
 
   LlenaEmpleadores(){
   	this.eService.GetNombresEmpleadores().subscribe((res) => {
+      
   		if(res.ok && res.json()){
   			this.empleadores = res.json().datos;
+  			
   		}
   	});
   }
 
+  ionViewWillEnter(){
+    this.LlenaPlazas();
+  }
+
   LlenaPlazas(){
+
   	if(this.tipo === 'usuario'){
   		this.cService.GetPlazasAbiertas().subscribe((res) => {
   			if(res.ok && res.json()){
   				this.plazas = res.json().datos;
-  				this.LlenaEmpleadores();
+  				
   			}
   		});
   	}else if(this.tipo === 'empleador'){
@@ -87,14 +100,14 @@ export class PlazasPage implements OnInit {
   				this.cService.GetEmployerPlazas(this.uid).subscribe((res) => {
 					if(res.ok && res.json()){
 						this.plazas = res.json().datos;
-						this.LlenaEmpleadores();
+						
 					}
 				});
   			}else {
   				this.cService.GetEmployerPlazasAbiertas(this.uid).subscribe((res) => {
   					if(res.ok && res.json()){
   						this.plazas = res.json().datos;
-  						this.LlenaEmpleadores();
+  						
   					}
   				});
   			}
@@ -107,14 +120,14 @@ export class PlazasPage implements OnInit {
   				this.cService.GetPlazas().subscribe((res) => {
   					if(res.ok && res.json()){
   						this.plazas = res.json().datos;
-  						this.LlenaEmpleadores();
+  						
   					}
   				});
   			}else{
   				this.cService.GetPlazasAbiertas().subscribe((res) => {
   					if(res.ok && res.json()){
   						this.plazas = res.json().datos;
-  						this.LlenaEmpleadores();
+  						
   					}
   				});
   			}
@@ -122,8 +135,8 @@ export class PlazasPage implements OnInit {
   	}
   }
 
-  On_Item_Click(idPlaza:string){
-  	
+  GotoDetalle(idPlaza:string){
+  	 this._router.navigateByUrl('/plazas/ver/'.concat(idPlaza));
   }
 
   On_Toggle_Change(){
@@ -136,13 +149,22 @@ export class PlazasPage implements OnInit {
   	
   }
 
+  On_Nuevo_Click(){
+    this._router.navigateByUrl('/plazas/'.concat(this.uid, '/nuevo'));
+  }
+
   GetNombreEmpleador(uid:string):string{
+
   	let nombre = '';
-  	this.empleadores.forEach((val) => {
-  		if (val._id == uid) {
-  			nombre = val.nombreLargo;
-  		}
-  	});
+
+    if (this.empleadores != null && this.empleadores.length > 0) {
+      for(let emp of this.empleadores){
+       
+        if (emp._id === uid) {
+          nombre = emp.nombreCorto;
+        }
+      }
+    }
 
   	return nombre;
   }
@@ -151,8 +173,9 @@ export class PlazasPage implements OnInit {
 
   	let items = [
   		{
-  			title: 'Crear',
-  			link: '/plazas/nuevo'
+  			title: 'Nueva',
+  			link: '/plazas/'.concat(this.uid, '/nuevo'),
+        icon: 'add'
   		}
   	];
 
@@ -160,7 +183,7 @@ export class PlazasPage implements OnInit {
   		component: PopoverComponent,
   		animated: true,
   		keyboardClose: true,
-  		componentProps: { 'items':items }
+  		componentProps: { 'items':items,'detalle':false }
   	});
 
   	return await popover.present();

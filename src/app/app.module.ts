@@ -15,13 +15,14 @@ import { environment } from '../environments/environment';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireMessagingModule } from 'angularfire2/messaging';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { Nl2BrPipeModule } from 'nl2br-pipe';
 
 import { UserService } from './services/user.service';
 import { CandidateService } from './services/candidate.service'; 
 import { EmployerService } from './services/employer.service';
 import { CommunicationService } from './services/communication.service';
 import { ConvocatoriasService } from './services/convocatorias.service';
-import { NoticiasService } from './services/noticias.service';
+import { PlazasService } from './services/plazas.service';
 import { AdminService } from './services/admin.service';
 
 @NgModule({
@@ -35,7 +36,8 @@ import { AdminService } from './services/admin.service';
     AngularFireAuthModule,
     AngularFireMessagingModule,
     AngularFireDatabaseModule,
-    HttpModule
+    HttpModule,
+    Nl2BrPipeModule
   ],
   providers: [
     StatusBar,
@@ -45,7 +47,7 @@ import { AdminService } from './services/admin.service';
     EmployerService,
     CommunicationService,
     ConvocatoriasService,
-    NoticiasService,
+    PlazasService,
     AdminService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],

@@ -4,6 +4,9 @@ import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { UserService } from '../services/user.service';
+import { CandidateService } from '../services/candidate.service';
+
+import { Usuario } from '../clases/usuario';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +20,13 @@ export class LoginPage implements OnInit {
 
 	private email:string;
 	private contrasena:string;
-  constructor(private _router:Router, private _route:ActivatedRoute, private uService:UserService, private toastCtrl:ToastController) { }
+  constructor(
+    private _router:Router, 
+    private _route:ActivatedRoute, 
+    private uService:UserService, 
+    private toastCtrl:ToastController,
+    private cService:CandidateService
+    ) { }
 
   ngOnInit() {
   }
@@ -64,9 +73,92 @@ export class LoginPage implements OnInit {
 
   On_Login_With_Facebook_Click(){
 
+    this.uService.LoginFacebook().then((cred) => {
+      if(cred.user != null){
+
+        let uid = cred.user.uid;
+        let email = cred.user.email;
+
+        this.uService.UserAudit(uid,'login');
+
+        this.CheckUsuario(uid, email);
+        
+      }
+    }, (error) => {
+
+      let mensaje = '';
+      console.log(error.code);
+
+      if (error.code === 'auth/account-exists-with-different-credential') {
+        mensaje = 'La dirección de correo está registrada con otra credencial.';
+        
+      }else {
+        mensaje = error.code;
+      }
+
+      this.PresentToast(mensaje);
+      
+    }).catch((error) => {
+      console.error('Error al validar: '.concat(error.message));
+    });
+
   }
 
   On_Login_With_Twitter_Click(){
+
+    this.uService.LoginTwitter().then((cred) => {
+
+      if (cred.user != null) {
+        
+        let uid = cred.user.uid;
+        let email = cred.user.email;
+
+        this.uService.UserAudit(uid,'login');
+
+        this.CheckUsuario(uid, email);
+
+      }
+
+    }, (error) => {
+      
+      let mensaje = '';
+
+      if (error.code === 'auth/account-exists-with-different-credential') {
+        mensaje = 'La dirección de correo está registrada con otra credencial.';
+        
+      }else {
+        mensaje = error.code;
+      }
+
+      this.PresentToast(mensaje);
+
+    }).catch((error) => {
+      console.error('Error al validar: '.concat(error.message));
+    });
+  }
+
+  CheckUsuario(uid:string, email:string){
+
+    this.uService.IsCandidate(uid).subscribe((res) => {
+      if (res.ok && res.json().count > 0) {
+        
+        let usuario:Usuario = new Usuario();
+        usuario._id = uid;
+        usuario.email = email;
+        usuario.activo = true;
+        usuario.fechaIngreso = new Date().toLocaleDateString();
+        this.cService.InsertCandidate(usuario).subscribe((res) => {
+          if(res.json().count > 0){
+            this.PresentToast('Usuario Registrado').then(() => {
+              this.Redirect();
+            });
+          }
+        });
+
+      }else if(res.ok && res.json() == 0){
+        this.Redirect();
+      }
+    });
 
   }
 

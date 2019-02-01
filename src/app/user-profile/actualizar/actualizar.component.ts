@@ -5,6 +5,7 @@ import { CandidateService } from './../../services/candidate.service';
 import { EmployerService } from './../../services/employer.service';
 import { Empleador } from '../../clases/empleador';
 import { Usuario } from '../../clases/usuario';
+import { Curriculum } from '../../clases/curriculum';
 import { environment } from './../../../environments/environment';
 
 @Component({
@@ -19,6 +20,7 @@ export class ActualizarComponent implements OnInit {
 	private tipo:string;
 	private usuario:Usuario;
 	private empleador:Empleador;
+  private curriculum:Curriculum;
 	private imageFile:string;
 	private uid:string;
 	private today:Date;
@@ -30,11 +32,20 @@ export class ActualizarComponent implements OnInit {
 	private tipoTelTemp:string;
 	private fotoTemp:string;
 	private fotoGuardado:boolean;
+  private documentoTemp:string;
+  private documentoGuardado:boolean;
 
 	private baseUrl = environment.appUrl;
 
-  constructor(private _router:Router, private navCtrl:NavController, private toastCtrl:ToastController, private _route:ActivatedRoute, private cService:CandidateService, private eService:EmployerService) { 
+  constructor(
+    private _router:Router, 
+    private navCtrl:NavController, 
+    private toastCtrl:ToastController, 
+    private _route:ActivatedRoute, 
+    private cService:CandidateService, 
+    private eService:EmployerService) { 
   	this.fotoGuardado = true;
+    this.documentoGuardado = true;
   }
 
   ngOnInit() {
@@ -83,6 +94,7 @@ export class ActualizarComponent implements OnInit {
   }
 
   ionViewWillLeave(){
+    
   	if(!this.fotoGuardado){
   		if(this.tipo === 'usuario'){
   			this.cService.DeleteCandidateFoto(this.uid, this.fotoTemp).subscribe((res) => {
@@ -98,6 +110,14 @@ export class ActualizarComponent implements OnInit {
   			});
   		}
   	}
+
+    if(!this.documentoGuardado){
+      this.cService.DeleteCurriculumDocument(this.uid, this.documentoTemp).subscribe((res) => {
+        if (res.ok && res.json().count > 0) {
+          console.log('Documento borrado');
+        }
+      });
+    }
 
   	
   }
@@ -152,6 +172,21 @@ export class ActualizarComponent implements OnInit {
   	}
   }
 
+  On_File_Change(docFile:any){
+    this.cService.UploadCurriculumDocument(this.uid, docFile.files[0]).subscribe((res) => {
+      if (res.ok && res.json().count > 0) {
+        this.documentoTemp = docFile.files[0].name;
+        this.curriculum = new Curriculum();
+        this.curriculum._id = this.uid;
+        this.curriculum.documento = true;
+        this.curriculum.documentoUrl = this.baseUrl.concat('/usuarios/', this.uid, '/curriculum/', this.documentoTemp);
+        this.curriculum.fechaCreacion = new Date().toLocaleDateString();
+        this.curriculum.fechaActualizacion = this.curriculum.fechaCreacion;
+        this.documentoGuardado = false;
+      }
+    });
+  }
+
   On_Guardar_Click(){
   	if (this.tipo === 'usuario') {
 
@@ -161,7 +196,20 @@ export class ActualizarComponent implements OnInit {
 
 		this.cService.UpdateCandidate(this.uid, this.usuario).subscribe((res) => {
 			if(res.ok && res.json()){
-				this.ConfirmaGuardado();
+
+        if (!this.documentoGuardado) {
+          
+          this.cService.InsertCandidateCurriculum(this.curriculum).subscribe((r) => {
+            if (r.ok && r.json().count > 0) {
+              this.documentoGuardado = true;
+              this.documentoTemp = '';
+              this.ConfirmaGuardado();
+            }
+          });
+        }else{
+          this.ConfirmaGuardado();
+        }
+				
 			}
 		}, (err) => {
 			this.ShowToast(err.message);
@@ -180,10 +228,10 @@ export class ActualizarComponent implements OnInit {
   }
 
   ConfirmaGuardado(){
-	this.fotoGuardado = true;
-	this.fotoTemp = '';
-	this.ShowToast();
-	this.Redirect();
+  	this.fotoGuardado = true;
+  	this.fotoTemp = '';
+  	this.ShowToast();
+  	this.Redirect();
   }
 
   async ShowToast(mensaje:string='Cambios Aplicados'){

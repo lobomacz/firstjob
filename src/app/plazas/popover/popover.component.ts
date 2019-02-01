@@ -10,15 +10,21 @@ import { PopoverController, NavParams } from '@ionic/angular';
 export class PopoverComponent implements OnInit {
 
 	private opciones:any[];
+	private detalle:boolean;
 
   constructor(private navParams:NavParams, private _router:Router, private popoverCtrl:PopoverController) { }
 
   ngOnInit() {
   	this.opciones = this.navParams.data.items;
+  	this.detalle = this.navParams.data.detalle;
   }
 
   Dismiss(){
   	this.popoverCtrl.dismiss();
+  }
+
+  On_Cerrar_Plaza(){
+  	this.popoverCtrl.dismiss({'cerrar':true});
   }
 
 }

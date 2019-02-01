@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ id != null ? 'Edición de':'Nueva' }} Convocatoria</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+	<p>Las convocatorias son todo tipo de anuncio o información
+	con relación a alguna actividad extracurricular que se vaya a desarrollar.</p>
+	<p>Estas actividades pueden ser: seminarios, talleres de capacitación, charlas
+	converencias o presentaciones.</p>
+	<p>También se pueden publicar convocatorias a becas de postgrado, cursos de especialización, 
+	entre otros temas de interés para los profesionales miembros.</p>
+
+	<ion-grid>
+		<ion-row>
+			<ion-col size="6">
+				<ion-label position="floating">
+					Título
+				</ion-label>
+				<ion-input [(ngModel)]="convocatoria.titulo" type="text" ></ion-input>
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col size="6">
+				<ion-label position="floating">
+					Descripción
+				</ion-label>
+				<ion-textarea [(ngModel)]="convocatoria.descripcion" ></ion-textarea>
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col size="6">
+				<ion-label position="floating">
+					Etiquetas
+				</ion-label>
+				<ion-input [(ngModel)]="etiquetas" type="text" ></ion-input>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+	<ion-item>
+		<ion-button (click)="On_Guardar_Click()" >
+			Guardar  <ion-icon name="save"></ion-icon>
+		</ion-button>
+	</ion-item>
+</ion-content>

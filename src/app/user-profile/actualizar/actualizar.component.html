@@ -53,6 +53,19 @@
 			</ion-col>
 		</ion-row>
 		<ion-row>
+			<ion-col size="12">
+				<ion-label position="fixed" color="primary">
+					Documento(Currículum) -- Solo PDF
+				</ion-label>
+				<input type="file" name="" #docFile (change)="On_File_Change(docFile)" accept="application/pdf" value="" placeholder="Solo PDF">
+				<ion-item *ngIf="curriculum != null" >
+					<a target="_blank" href="{{ curriculum.documentoUrl }}" >
+					Descargar 
+				</a>  <ion-icon name="download"></ion-icon>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+		<ion-row>
 			<ion-col>
 				<ion-label position="fixed">
 					Fecha de Nac.

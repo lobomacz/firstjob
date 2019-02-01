@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+//import { Router } from '@angular/router';
 import { PopoverController, NavParams } from '@ionic/angular';
 
 
@@ -29,15 +29,17 @@ export class PopoverComponent implements OnInit {
   		this.options = [
     		{
     			title:'Crear',
-    			link: '/userProfile/nuevo/'.concat(this.tipo, '/', this.uid)
+    			link: '/userProfile/nuevo/'.concat(this.tipo, '/', this.uid),
+          icon: 'add'
     		}
     	];
 
   	}else if(!this.sinPerfil){
   		this.options = [
   		{
-  			title: 'Actualizar',
-  			link: '/userProfile/actualizar/'.concat(this.tipo, '/', this.uid)
+  			title: 'Editar',
+  			link: '/userProfile/actualizar/'.concat(this.tipo, '/', this.uid),
+        icon: 'create'
   		},
   		]
   	}

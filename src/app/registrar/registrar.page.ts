@@ -25,7 +25,12 @@ export class RegistrarPage implements OnInit {
 	esUsuario:boolean;
 	esEmpleador:boolean;
 
-  constructor(private toastCtrl:ToastController, private _router:Router, private _auth:AngularFireAuth, private eService:EmployerService, private cService:CandidateService) { }
+  constructor(
+    private toastCtrl:ToastController, 
+    private _router:Router, 
+    private _auth:AngularFireAuth, 
+    private eService:EmployerService, 
+    private cService:CandidateService) { }
 
   ngOnInit() {
   }

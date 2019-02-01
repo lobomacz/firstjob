@@ -42,6 +42,7 @@
     "cordova-support-google-services": "1.2.1",
     "core-js": "^2.5.4",
     "firebase": "^5.7.1",
+    "nl2br-pipe": "^1.1.0",
     "rxjs": "^6.3.3",
     "zone.js": "~0.8.26"
   },

@@ -5,7 +5,8 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase, DatabaseSnapshot, AngularFireAction } from 'angularfire2/database';
 import { environment } from '../../environments/environment';
 import { User } from 'firebase';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable } from 'rxjs';
+import { auth } from 'firebase/app';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,11 @@ export class UserService {
   private uid:string;
   baseUrl:string = environment.appUrl;
 
-  constructor(private _auth:AngularFireAuth, private _db:AngularFireDatabase, private http:Http, private _router:Router) {
+  constructor(
+    private _auth:AngularFireAuth, 
+    private _db:AngularFireDatabase, 
+    private http:Http, 
+    private _router:Router) {
 
   }
 
@@ -30,6 +35,14 @@ export class UserService {
 
   GetSector(id:string):Observable<Response>{
     return this.http.get(this.baseUrl.concat('/sectores/', id));
+  }
+
+  GetCategorias():Observable<Response>{
+    return this.http.get(this.baseUrl.concat('/categorias'));
+  }
+
+  GetCategoria(id:string):Observable<Response>{
+    return this.http.get(this.baseUrl.concat('/categorias/', id));
   }
 
   GetEtnias():Observable<Response>{
@@ -61,6 +74,14 @@ export class UserService {
 
   LoginEmail(email:string, pass:string):Promise<any>{
   	return this._auth.auth.signInWithEmailAndPassword(email, pass);
+  }
+
+  LoginFacebook():Promise<auth.UserCredential>{
+    return this._auth.auth.signInWithPopup(new auth.FacebookAuthProvider());
+  }
+
+  LoginTwitter():Promise<auth.UserCredential>{
+    return this._auth.auth.signInWithPopup(new auth.TwitterAuthProvider());
   }
 
   Logout(uid:string):Promise<void>{

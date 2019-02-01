@@ -54,7 +54,7 @@ export class AppComponent {
       },
       {
         title: 'Convocatorias',
-        url: '/oferta',
+        url: '/convocatorias',
         icon: 'megaphone'
       },
       {
@@ -80,7 +80,7 @@ export class AppComponent {
       },
       {
         title: 'Convocatorias',
-        url: '/oferta',
+        url: '/convocatorias',
         icon: 'megaphone'
       },
       {
@@ -97,7 +97,7 @@ export class AppComponent {
       },
       {
         title: 'Convocatorias',
-        url: '/oferta',
+        url: '/convocatorias',
         icon: 'megaphone'
       },
       {

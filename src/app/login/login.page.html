@@ -9,11 +9,13 @@
 <ion-card >
 
   <ion-card-header>
-    Ingreso de Usuarios
+    <ion-card-title>Ingreso de Usuarios</ion-card-title>
+    <ion-card-subtitle>Usuarios Registrados</ion-card-subtitle>
   </ion-card-header>
 
   <ion-card-content >
     <p>Ingresa con tu correo electrónico y contraseña de la plataforma.</p>
+    <p>Si no te has registrado, da click en 'Crear Cuenta' para generar tu credencial.</p>
   	<ion-item>
   		<ion-input #correo="ngModel" type="email" required [(ngModel)]="email" placeholder="email@servicio.com" ></ion-input>
   	</ion-item>
@@ -33,10 +35,14 @@
 <ion-card>
 
   <ion-card-header>
-    Ingresa con tus Redes Sociales
+    <ion-card-title>Ingresa con tus Redes Sociales</ion-card-title>
+    <ion-card-subtitle>Usuarios Sin Credencial</ion-card-subtitle>
   </ion-card-header>
 
   <ion-card-content>
+    <p>Puedes validarte usando tus credenciales de <ion-text color="secondary">Twitter <ion-icon name="logo-twitter"></ion-icon></ion-text> o <ion-text color="primary">Facebook <ion-icon name="logo-facebook"></ion-icon></ion-text> para crear 
+    una nueva cuenta de usuario en la plataforma.</p>
+    <h2>Esta opción no está habilitada para empleadores.</h2>
     <ion-list>
       <ion-item>
         <ion-buttons>

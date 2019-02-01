@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Credenciales</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+	<ion-card>
+	
+	  <ion-card-header>
+	    <ion-card-title>Credenciales de Administrador</ion-card-title>
+	  </ion-card-header>
+	
+	  <ion-card-content>
+	    
+		<p>Administración de credenciales de Administrador.</p>
+		<p>Aquí podrá solicitar la reasignación de su contraseña o crear nuevas credenciales de administrador.</p>
+		
+		<ion-item>
+	      <ion-button [routerLink]="['/login','reset']" color="medium" >Renueva Tu Contraseña</ion-button>
+	    </ion-item>
+
+		<ion-item>
+			<ion-label>
+				Ingresa Credenciales de Administrador.
+			</ion-label>
+		</ion-item>
+		<ion-item>
+			<ion-label position="floating">
+				Email
+			</ion-label>
+			<ion-input [(ngModel)]="email" type="text" ></ion-input>
+		</ion-item>
+		<ion-item>
+			<ion-label position="floating">
+				Contraseña
+			</ion-label>
+			<ion-input [(ngModel)]="contrasena" type="text" ></ion-input>
+		</ion-item>
+		<ion-item>
+			<ion-button (click)="On_Crear_Click()" >
+				Crear&nbsp;<ion-icon name="add"></ion-icon>
+			</ion-button>
+		</ion-item>
+
+	  </ion-card-content>
+	
+	</ion-card>
+</ion-content>

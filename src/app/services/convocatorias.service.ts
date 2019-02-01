@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { Http, Headers, RequestOptions, Response } from '@angular/http';
-import { Plaza } from './../clases/plaza';
-import { environment } from '../../environments/environment';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { RequestOptions, Http, Headers, Response } from '@angular/http';
+import { Convocatoria } from './../clases/convocatoria';
+import { environment } from './../../environments/environment';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,102 +11,44 @@ export class ConvocatoriasService {
 
 	private baseUrl:string = environment.appUrl;
 
-  constructor(private _router:Router, private _http:Http) { }
+  constructor(private _http:Http) { }
 
-  GetPlazas():Observable<Response>{
-  	return this._http.get(this.baseUrl.concat('/plazas/todas'));
+  GetConvocatorias():Observable<Response>{
+  	return this._http.get(this.baseUrl.concat('/convocatorias/todas'));
   }
 
-  GetPlazasAbiertas():Observable<Response>{
-  	return this._http.get(this.baseUrl.concat('/plazas/abiertas'));
+  GetPorFechas(inicio:string, final:string):Observable<Response>{
+  	return this._http.get(this.baseUrl.concat('/convocatorias/fechas/',inicio,'/',final));
   }
 
-  GetEmployerPlazasAbiertas(uid:string):Observable<Response>{
-  	return this._http.get(this.baseUrl.concat('/plazas/', uid, '/abiertas'));
+  GetConvocatoria(id:string):Observable<Response>{
+  	return this._http.get(this.baseUrl.concat('/convocatorias/', id));
   }
 
-  GetEmployerPlazas(uid:string):Observable<Response>{
-  	return this._http.get(this.baseUrl.concat('/plazas/', uid));
-  }
+  InsertConvocatoria(obj:Convocatoria):Observable<Response>{
 
-  GetUserApplyPlazas(uid:string):Observable<Response>{
-  	return this._http.get(this.baseUrl.concat('/plazas/usuario/', uid));
-  }
-
-  GetUserApplied(id:string, uid:string):Observable<Response>{
-  	return this._http.get(this.baseUrl.concat('/plazas/', id, '/usuario/', uid));
-  }
-
-  UnapplyUser(id:string, uid:string):Observable<Response>{
-
-  	let headers:Headers = new Headers({
+  	const headers:Headers = new Headers({
   		'Content-Type': 'application/json'
   	});
 
-  	let options:RequestOptions = new RequestOptions({'headers': headers});
+  	let options:RequestOptions = new RequestOptions({'headers':headers});
 
-  	let datos = {'uid':uid};
+  	let datos = {'convocatoria':obj};
 
-  	return this._http.post(this.baseUrl.concat('/plazas/', id, '/retirar'), datos, options);
-
+  	return this._http.post(this.baseUrl.concat('/convocatorias/nueva'), datos, options);
   }
 
-  ApplyPlaza(id:string, uid:string):Observable<Response>{
+  UpdateConvocatoria(id:string, obj:Convocatoria):Observable<Response>{
 
-  	let headers:Headers = new Headers({
+  	const headers:Headers = new Headers({
   		'Content-Type': 'application/json'
   	});
 
-  	let options:RequestOptions = new RequestOptions({'headers': headers});
+  	let options:RequestOptions = new RequestOptions({'headers':headers});
 
-  	let datos = {'uid':uid};
+  	let datos = {'convocatoria':obj};
 
-  	return this._http.post(this.baseUrl.concat('/plazas/', id, '/aplicar'), datos, options);
-
+  	return this._http.post(this.baseUrl.concat('/convocatorias/', id, '/actualizar'), datos, options);
   }
-
-
-  InsertPlaza(uid:string, plaza:Plaza):Observable<Response>{
-
-  	let headers:Headers = new Headers({
-  		'Content-Type': 'application/json'
-  	});
-
-  	let options:RequestOptions = new RequestOptions({'headers': headers});
-
-  	let datos = {'plaza':plaza};
-
-  	return this._http.post(this.baseUrl.concat('/plazas/nueva'), datos, options);
-  }
-
-  UpdatePlaza(id:string, plaza:Plaza):Observable<Response>{
-
-  	let headers:Headers = new Headers({
-  		'Content-Type': 'application/json'
-  	});
-
-  	let options:RequestOptions = new RequestOptions({'headers': headers});
-
-  	let datos = {'plaza':plaza};
-
-  	return this._http.post(this.baseUrl.concat('/plazas/', id, '/actualizar'), datos, options);
-
-  }
-
-  ClosePlaza(id:string):Observable<Response>{
-
-  	let headers:Headers = new Headers({
-  		'Content-Type': 'application/json'
-  	});
-
-  	let options:RequestOptions = new RequestOptions({'headers': headers});
-
-  	let datos = {'id':id};
-
-  	return this._http.post(this.baseUrl.concat('/plazas/cerrar'), datos, options);
-
-  }
-
-  
 
 }

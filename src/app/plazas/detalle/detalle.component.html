@@ -1,3 +1,81 @@
-<p>
-  detalle works!
-</p>
+<ion-header>
+  <ion-toolbar>
+    <ion-title *ngIf="plaza != null" >Plaza {{ plaza.abierta ? 'Disponible':'Cerrada' }}</ion-title>
+    <ion-buttons *ngIf="tipo === 'empleador'" slot="end">
+	  	<ion-button (click)="PlazaPopover()" >
+	  		<ion-icon name="more"></ion-icon>
+	  	</ion-button>
+	</ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="plaza != null" padding>
+
+	<ion-item>
+		<ion-label color="primary" >
+			<h2>DETALLE</h2>
+		</ion-label>
+	</ion-item>
+
+	<ion-text color="primary">
+		<h4>Titulo</h4>
+	</ion-text>
+	<ion-label >
+		{{ plaza.titulo | uppercase }}
+	</ion-label>
+
+	<ion-text color="primary">
+		<h4>Descripción</h4>
+	</ion-text>
+	<div [innerHtml]="plaza.descripcion | uppercase | nl2br" ></div>
+	
+	<ion-text color="primary">
+		<h4>Categoría</h4>
+	</ion-text>
+	<ion-label>
+		{{ categoria | uppercase }}
+	</ion-label>
+	<ion-text color="primary">
+		<h4>Empleador</h4>
+	</ion-text>
+	<ion-label>
+		{{ empleador | uppercase }}
+	</ion-label>
+	<ion-text color="primary">
+		<h4>Sector</h4>
+	</ion-text>
+	<ion-label>
+		{{ sector | uppercase }}
+	</ion-label>
+	<ion-text color="primary">
+		<h4>Fecha Límite</h4>
+	</ion-text>
+	<ion-label>
+		{{ plaza.fechaLimite }}
+	</ion-label>
+	<ion-item >
+		<a href="{{ documentUrl }}" target="_blank" color="primary" ion-button >
+			Descargar <ion-icon name="download"></ion-icon>
+		</a>
+		
+	</ion-item>
+	<ion-item>
+		<ion-label>
+			Aplicantes
+		</ion-label>
+		<ion-badge color="tertiary" >
+			{{ plaza.aplicantes.length }}
+		</ion-badge>
+	</ion-item>
+	<ion-item *ngIf="tipo === 'usuario' && !esAplicante" >
+		<ion-button (click)="On_Aplicar_Click()" >
+			Aplicar  <ion-icon name="heart"></ion-icon>
+		</ion-button>
+	</ion-item>
+	<ion-item *ngIf="tipo === 'usuario' && esAplicante" >
+		<ion-button color="danger" (click)="On_Retirar_Click()" >
+			Cancelar Aplicación  <ion-icon name="heart-dislike"></ion-icon>
+		</ion-button>
+	</ion-item>
+	
+</ion-content>

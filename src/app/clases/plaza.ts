@@ -4,7 +4,7 @@ export class Plaza {
 	titulo:string;
 	sector:string;
 	descripcion:string;
-	categoria:number;
+	categoria:string;
 	fechaPublicacion:string;
 	emailPublicador:string;
 	fechaLimite:string;
@@ -33,9 +33,11 @@ export class Plaza {
 			this.idEmpleador = idEmpleador;
 			this.titulo = titulo;
 			this.descripcion = descripcion;
+			this.sector = sector;
 			this.categoria = categoria;
 			this.fechaPublicacion = fechaPublicacion;
 			this.emailPublicador = emailPublicador;
+			this.fechaLimite = fechaLimite;
 			this.contacto = contacto;
 			this.documento = documento;
 			this.abierta = abierta;
@@ -46,16 +48,18 @@ export class Plaza {
 			this.idEmpleador = '';
 			this.titulo = '';
 			this.descripcion = '';
-			this.categoria = null;
+			this.sector = '';
+			this.categoria = '';
 			this.fechaPublicacion = '';
 			this.emailPublicador = '';
+			this.fechaLimite = '';
 			this.contacto = {
 				'nombre':'',
 				'telefono':'',
 				'email': ''
 			};
 			this.documento = '';
-			this.abierta = null;
+			this.abierta = true;
 			this.aplicantes = [];
 
 		}

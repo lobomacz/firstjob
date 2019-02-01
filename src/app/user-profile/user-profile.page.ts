@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PopoverController, ToastController, AlertController } from '@ionic/angular';
+import { Nl2BrPipe } from 'nl2br-pipe';
 import { PopoverComponent } from './popover/popover.component';
 import { environment } from './../../environments/environment';
 import { Empleador } from '../clases/empleador';
 import { Usuario } from '../clases/usuario';
+import { Curriculum } from '../clases/curriculum';
 import { CandidateService } from './../services/candidate.service';
 import { EmployerService } from './../services/employer.service';
 import { Observable } from 'rxjs';
@@ -16,18 +18,27 @@ import { Observable } from 'rxjs';
 })
 export class UserProfilePage implements OnInit {
 
-	tipoUsuario:string;
-	empleador:Empleador;
-	usuario:Usuario;
-  imageFile:string;
-  _uid:string;
-  baseUrl:string = environment.appUrl;
-  sinPerfil:boolean;
-  userEtnia:string;
-  userNivel:string;
-  userSector:string;
+	private tipoUsuario:string;
+	private empleador:Empleador;
+	private usuario:Usuario;
+  private imageFile:string;
+  private _uid:string;
+  private baseUrl:string = environment.appUrl;
+  private sinPerfil:boolean;
+  private userEtnia:string;
+  private userNivel:string;
+  private userSector:string;
+  private curriculum:Curriculum;
 
-  constructor(private cService:CandidateService, private eService:EmployerService, private _router:Router, private _route:ActivatedRoute, private popoverCtrl:PopoverController, private toastCtrl:ToastController, private alertCtrl:AlertController) { 
+  constructor(
+    private cService:CandidateService, 
+    private eService:EmployerService, 
+    private _router:Router, 
+    private _route:ActivatedRoute, 
+    private popoverCtrl:PopoverController, 
+    private toastCtrl:ToastController, 
+    private alertCtrl:AlertController) { 
+    
   	this.tipoUsuario = 'desconocido';
     this.empleador = null;
     this.usuario = null;
@@ -109,6 +120,16 @@ export class UserProfilePage implements OnInit {
         this.usuario = new Usuario(res.json());
         this.tipoUsuario = 'usuario';
         this.imageFile = this.baseUrl.concat(this.usuario.foto);
+
+        this.cService.GetCurriculum(this._uid).subscribe((res) => {
+          
+          if (res.ok && res.json()) {
+            this.curriculum = new Curriculum(res.json());
+          }else{
+            this.curriculum = null;
+          }
+        });
+
         if (this.usuario.primerNombre != '' && this.usuario.primerApellido != '' && this.usuario.direccion != '') {
           this.sinPerfil = false;
         }
@@ -179,7 +200,9 @@ export class UserProfilePage implements OnInit {
     popover.onDidDismiss().then((ov) => {
       
       this.On_Popover_Dismiss(ov.data);
+
     });
+    
     return await popover.present();
   }
 
