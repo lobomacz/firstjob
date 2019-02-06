@@ -18,8 +18,9 @@ export class LoginPage implements OnInit {
 	@ViewChild('correo') emailField:any;
 	@ViewChild('clave') passwordField:any;
 
-	private email:string;
-	private contrasena:string;
+	public email:string;
+	public contrasena:string;
+  
   constructor(
     private _router:Router, 
     private _route:ActivatedRoute, 

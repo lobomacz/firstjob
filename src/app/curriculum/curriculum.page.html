@@ -8,23 +8,28 @@
 	<ion-card>
 	
 	  <ion-card-header>
-	    <ion-card-title>Curriculum en PDF</ion-card-title>
+	    <ion-card-title>Curriculum en Documento</ion-card-title>
 	  </ion-card-header>
 	
 	  <ion-card-content>
 	    <p>
-	    	Puede cargar su curriculum en un archivo con formato PDF. De esta manera, los empleadores tendrán acceso a descargarlo de su perfil de usuario cuando aplique a una plaza.
+	    	Puede cargar su curriculum en un archivo con formato PDF o MS-Word. De esta manera, los empleadores tendrán acceso a descargarlo de su perfil de usuario cuando aplique a una plaza.
 	    </p>
 
 	    <ion-item>
 	    	<ion-label text-wrap position="fixed" color="primary">
-				Documento PDF
+				Documento PDF o MS-Word
 			</ion-label>
-			<input type="file" name="" #docFile (change)="On_File_Change(docFile)" accept="application/pdf" value="" placeholder="Solo PDF">
+			<input type="file" name="" #docFile (change)="On_File_Change(docFile)" accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" value="" placeholder="Curriculum">
+	    </ion-item>
+	    <ion-item >
+	    	<ion-button (click)="GuardaDocumento()" >
+	    		Guardar <ion-icon name="save"></ion-icon>
+	    	</ion-button>
 	    </ion-item>
 	    <ion-item *ngIf="curriculum != null && curriculum.documentoUrl !== ''" >
 			<a target="_blank" href="{{ curriculum.documentoUrl }}" >
-			Descargar 
+			Descargar Curriculum
 		</a>  <ion-icon name="download"></ion-icon>
 		</ion-item>
 

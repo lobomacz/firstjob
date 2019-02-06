@@ -13,9 +13,9 @@ import { Nl2BrPipe } from 'nl2br-pipe';
 })
 export class DetalleComponent implements OnInit {
 
-	private id:string;
-	private convocatoria:Convocatoria;
-	private descripcion:string;
+	public convocatoria:Convocatoria;
+  
+  private id:string;
 
   constructor(
   	private _route:ActivatedRoute,

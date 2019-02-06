@@ -20,6 +20,12 @@
         <p>First Job es una plataforma que ofrece el servicio de Bolsa de Empleo para egresados de universidad, técnicos y población en general de la R.A.C.C.S. Aquí empresarios que estén interesados podrán publicar sus convocatorias y ver el perfil de profesionales en los que tengan interés en contratarlos.</p>
       </ion-card-content>
     </ion-card>
+
+    
+    <ion-item *ngIf="spot1.activado">
+      <img [src]="baseUrl + spot1.imagen" alt="" class="spot-img">
+    </ion-item>
+
     <ion-card class="welcome-card">
       <ion-img src="/assets/img/adults-agreement.png" ></ion-img>
       <ion-card-header>
@@ -33,20 +39,30 @@
     
     </ion-card>
 
+    <ion-item *ngIf="spot2.activado">
+      <img [src]="baseUrl + spot2.imagen" alt="" class="spot-img">
+    </ion-item>
+
     <ion-card class="welcome-card" >
     
       <ion-img src="/assets/img/apple-class.png" ></ion-img>
       <ion-card-header>
         <ion-card-subtitle>Asistencia Inicial</ion-card-subtitle>
-        <ion-card-title>Crea tu Currículum Vitae</ion-card-title>
+        <ion-card-title>Publica tu Currículum Vitae</ion-card-title>
       </ion-card-header>
     
       <ion-card-content>
+        <p>Publica tu Currículum Vitae y estará a disposición de los empresarios que busquen contratarte.</p>
         <p>Encuentra una ayuda oportuna con nuestro asistente para crear tu primer curriculum.</p>
         <p>Si no estás familiarizado con el proceso o no conoces la estructura, te ayudamos a construir tu primer curriculum el que podrás descargar en formato PDF.</p>
       </ion-card-content>
     
     </ion-card>
+
+    <ion-item *ngIf="spot3.activado">
+      <img [src]="baseUrl + spot3.imagen" alt="" class="spot-img">
+    </ion-item>
+
     <ion-list lines="none">
       <ion-list-header>
         <ion-label>Colaboradores</ion-label>

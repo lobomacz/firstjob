@@ -1,11 +1,6 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>{{ idPlaza != null ? 'Edición':'Ingreso' }} de Plaza</ion-title>
-    <ion-buttons *ngIf="tipo === 'empleador'" slot="end">
-	  	<ion-button (click)="PlazaPopover()" >
-	  		<ion-icon name="more"></ion-icon>
-	  	</ion-button>
-	</ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -23,7 +18,7 @@
 					Sector
 				</ion-label>
 				<ion-select [(ngModel)]="plaza.sector" >
-					<ion-select-option *ngFor="let sector of sectores" value="{{ sector._id }}" >{{ sector.descripcion }}</ion-select-option>
+					<ion-select-option *ngFor="let sector of sectores" value="{{ sector._id }}" >{{ sector.descripcion_corta }}</ion-select-option>
 				</ion-select>
 			</ion-col>
 			<ion-col>
@@ -32,7 +27,7 @@
 				</ion-label>
 				<ion-select [(ngModel)]="plaza.categoria" >
 					<ion-select-option *ngFor="let categoria of categorias" value="{{ categoria._id }}" >
-						{{ categoria.descripcion }}
+						{{ categoria.descripcion_corta }}
 					</ion-select-option>
 				</ion-select>
 			</ion-col>
@@ -54,12 +49,12 @@
 		<ion-row>
 			<ion-col>
 				<ion-label position="fixed" color="primary">
-					Documento(opcional) -- Solo PDF
+					Documento(opcional)
 				</ion-label>
-				<input type="file" name="" #docFile (change)="On_File_Change(docFile)" accept="application/pdf" value="" placeholder="Solo PDF">
+				<input type="file" name="" #docFile (change)="On_File_Change(docFile)" accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" value="" placeholder="Documento Plaza">
 				<ion-item *ngIf="documentUrl != null" >
 					<a href="{{ documentUrl }}" >
-					Descargar 
+					Descargar Documento 
 				</a>  <ion-icon name="download"></ion-icon>
 				</ion-item>
 				
@@ -68,7 +63,7 @@
 		<ion-row>
 			<ion-col>
 				<ion-label color="secondary">
-					Contacto
+					Datos del Contacto
 				</ion-label>
 			</ion-col>
 		</ion-row>

@@ -8,3 +8,10 @@
 	left: 50%;
 	transform: translate(-50%, -50%);
 }
+
+@mixin estilo-input() {
+	background-color: $input-background-color;
+	color: $color-blanco;
+	border-radius: 5px;
+	border: 1px solid $input-text-color;
+}

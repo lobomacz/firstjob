@@ -18,7 +18,8 @@ export class AppComponent {
 
 
   public appPages:any[];
-  private userValid:boolean;
+  public userValid:boolean;
+
   private userEmail:string;
   private uid:string;
   
@@ -62,7 +63,7 @@ export class AppComponent {
         url:'/userProfile',
         icon: 'contact'
       }, {
-        title: 'Curriculo',
+        title: 'Curriculum',
         url:'/curriculum',
         icon: 'briefcase'
       }
@@ -130,10 +131,21 @@ export class AppComponent {
       this.splashScreen.hide();
     });
 
+    //Primero se suscribe al usuarioSubject para recibir 
+    //los cambios en el usuario.
+    this.uService.usuarioSubject.subscribe({
+      next: (v) => {
 
+        this.llenaOpcionesDeMenu(v);
+
+      }
+    });
+
+    //Luego suscribe a el usuario actual para actualizar
+    //el valor en usuarioSubject.
     this.uService.GetCurrentUser().subscribe((u) => {
       
-      this.llenaOpcionesDeMenu(u);
+      this.uService.usuarioSubject.next(u);
 
     });
     
@@ -151,6 +163,7 @@ export class AppComponent {
       this.uService.IsAdmin(this.uid).subscribe((u) => {
         
         if(u.key != null){
+
           this.appPages = this.pages.admin;
           
         }else{
@@ -162,8 +175,6 @@ export class AppComponent {
         
         if(res.ok && res.json().count > 0){
           this.appPages = this.pages.usuario;
-          
-        }else if(res.ok && res.json().count == 0){
           
         }
       });
@@ -182,6 +193,7 @@ export class AppComponent {
       this.uid = '';
       this.userValid = false;
       this.appPages = this.pages.invitado;
+      
     }
 
     
@@ -189,19 +201,18 @@ export class AppComponent {
   }
 
 
-
   UserLogout(){
     this.uService.Logout(this.uid).then(() => {
 
       this.uService.UserAudit(this.uid,'logout');
 
+      
       this.uService.GetCurrentUser().subscribe((u) => {
 
+        this.uService.usuarioSubject.next(u);
         this.GoHome();
 
       });
-
-      
       
     }).catch((err) => {
       console.log(err.message);

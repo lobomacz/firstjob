@@ -16,17 +16,17 @@ import { UserService } from '../../services/user.service';
 })
 export class EditarComponent implements OnInit {
 
-	private baseUrl:string = environment.appUrl;
+	public plaza:Plaza;
+	public idPlaza:string;
+	public sectores:any[];
+	public categorias:any[];
+  public documentUrl:string;
 
-	private plaza:Plaza;
-	private idPlaza:string;
-	private idEmpleador:string;
-	private sectores:any[];
-	private categorias:any[];
+  private idEmpleador:string;
 	private documentFile:string;
-	private documentUrl:string;
 	private documentFilePrev:string;
 	private documentSaved:boolean;
+  private baseUrl:string = environment.appUrl;
 
 
   constructor(

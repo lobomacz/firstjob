@@ -13,9 +13,9 @@ import { environment } from '../../../environments/environment';
 })
 export class AplicantesComponent implements OnInit {
 
-	private aplicantesPlaza:string[];
-	private aplicantes:Usuario[];
+  public aplicantes:Usuario[];
 
+	private aplicantesPlaza:string[];
 	private baseUrl:string = environment.appUrl;
 
   constructor(

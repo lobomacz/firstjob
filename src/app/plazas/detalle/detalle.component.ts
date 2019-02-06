@@ -20,16 +20,16 @@ import { Observable } from 'rxjs';
 })
 export class DetalleComponent implements OnInit {
 
-	private uid:string;
-	private tipo:string;
-	private idPlaza:string;
-	private plaza:Plaza;
-	private empleador:string;
-	private categoria:string;
-	private sector:string;
-  private documentUrl:string;
-  private esAplicante:boolean;
+	public tipo:string;
+	public idPlaza:string;
+	public plaza:Plaza;
+	public empleador:string;
+	public categoria:string;
+	public sector:string;
+  public documentUrl:string;
+  public esAplicante:boolean;
 
+  private uid:string;
 	private baseUrl:string = environment.appUrl;
 
 

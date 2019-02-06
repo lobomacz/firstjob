@@ -12,10 +12,11 @@ import { Convocatoria } from './../../clases/convocatoria';
 })
 export class EditarComponent implements OnInit {
 
-	private id:string;
-	private convocatoria:Convocatoria;
-	private uid:string;
-	private etiquetas:string;
+	public id:string;
+	public convocatoria:Convocatoria;
+	public etiquetas:string;
+
+  private uid:string;
 
   constructor(
   	private _route:ActivatedRoute, 

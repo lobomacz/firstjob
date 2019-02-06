@@ -17,24 +17,24 @@ export class ActualizarComponent implements OnInit {
 
 	@ViewChild('telefono') telefonoField:any;
 
-	private tipo:string;
-	private usuario:Usuario;
-	private empleador:Empleador;
-  private curriculum:Curriculum;
-	private imageFile:string;
+	public tipo:string;
+	public usuario:Usuario;
+	public empleador:Empleador;
+  public curriculum:Curriculum;
+	public imageFile:string;
+  public maxYear:string;
+  public nivelesAcademicos:any[];
+  public sectores:any[];
+  public etnias:any[];
+  public telefonoTemp:string;
+  public tipoTelTemp:string;
+
 	private uid:string;
 	private today:Date;
-	private maxYear:string;
-	private nivelesAcademicos:any[];
-	private sectores:any[];
-	private etnias:any[];
-	private telefonoTemp:string;
-	private tipoTelTemp:string;
 	private fotoTemp:string;
 	private fotoGuardado:boolean;
   private documentoTemp:string;
   private documentoGuardado:boolean;
-
 	private baseUrl = environment.appUrl;
 
   constructor(
@@ -54,6 +54,7 @@ export class ActualizarComponent implements OnInit {
   	
 
   	this._route.paramMap.subscribe((par) => {
+
   		this.tipo = par.get('tipo');
   		this.uid = par.get('id');
 

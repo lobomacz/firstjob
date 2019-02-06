@@ -24,6 +24,7 @@ import { CommunicationService } from './services/communication.service';
 import { ConvocatoriasService } from './services/convocatorias.service';
 import { PlazasService } from './services/plazas.service';
 import { AdminService } from './services/admin.service';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [AppComponent],
@@ -37,7 +38,8 @@ import { AdminService } from './services/admin.service';
     AngularFireMessagingModule,
     AngularFireDatabaseModule,
     HttpModule,
-    Nl2BrPipeModule
+    Nl2BrPipeModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     StatusBar,

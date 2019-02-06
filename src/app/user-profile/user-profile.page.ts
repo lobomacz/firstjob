@@ -18,17 +18,19 @@ import { Observable } from 'rxjs';
 })
 export class UserProfilePage implements OnInit {
 
-	private tipoUsuario:string;
-	private empleador:Empleador;
-	private usuario:Usuario;
-  private imageFile:string;
+	public tipoUsuario:string;
+	public empleador:Empleador;
+	public usuario:Usuario;
+  public imageFile:string;
+  public sinPerfil:boolean;
+  public curriculum:Curriculum;
+  public userNivel:string;
+  public userSector:string;
+  public userEtnia:string;
+  
   private _uid:string;
   private baseUrl:string = environment.appUrl;
-  private sinPerfil:boolean;
-  private userEtnia:string;
-  private userNivel:string;
-  private userSector:string;
-  private curriculum:Curriculum;
+  
 
   constructor(
     private cService:CandidateService, 
@@ -104,7 +106,9 @@ export class UserProfilePage implements OnInit {
 
           this.eService.IsEmployer(this._uid).subscribe((res) => {
             if(res.ok && res.json().count > 0){
+
               this.GetEmployerData();
+
             }
           });
 

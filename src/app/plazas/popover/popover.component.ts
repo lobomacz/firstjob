@@ -9,8 +9,8 @@ import { PopoverController, NavParams } from '@ionic/angular';
 })
 export class PopoverComponent implements OnInit {
 
-	private opciones:any[];
-	private detalle:boolean;
+	public opciones:any[];
+	public detalle:boolean;
 
   constructor(private navParams:NavParams, private _router:Router, private popoverCtrl:PopoverController) { }
 

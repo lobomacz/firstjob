@@ -5,7 +5,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase, DatabaseSnapshot, AngularFireAction } from 'angularfire2/database';
 import { environment } from '../../environments/environment';
 import { User } from 'firebase';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { auth } from 'firebase/app';
 
 @Injectable({
@@ -13,7 +13,8 @@ import { auth } from 'firebase/app';
 })
 export class UserService {
 
-	
+	public usuarioSubject:Subject<User | null>;
+  
   private uid:string;
   baseUrl:string = environment.appUrl;
 
@@ -22,6 +23,8 @@ export class UserService {
     private _db:AngularFireDatabase, 
     private http:Http, 
     private _router:Router) {
+
+    this.usuarioSubject = new Subject();
 
   }
 

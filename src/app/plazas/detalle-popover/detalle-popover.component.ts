@@ -10,9 +10,10 @@ import { PopoverController, NavParams } from '@ionic/angular';
 })
 export class DetallePopoverComponent implements OnInit {
 
-	private idPlaza:string;
+	public hasAplicantes:boolean;
+
+  private idPlaza:string;
 	private idEmpleador:string;
-	private hasAplicantes:boolean;
 
   constructor(
   	private navParams:NavParams, 
@@ -34,6 +35,12 @@ export class DetallePopoverComponent implements OnInit {
   	this._router.navigateByUrl('/plazas/editar/'.concat(this.idEmpleador, '/', this.idPlaza)).then(() => {
   		this.Dismiss()
   	});
+  }
+
+  On_Ver_Aplicantes(){
+    this._router.navigateByUrl('/plazas/'.concat(this.idPlaza,'/aplicantes')).then(() => {
+      this.Dismiss();
+    });
   }
 
   Dismiss(dato?:any){

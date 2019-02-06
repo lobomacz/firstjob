@@ -12,52 +12,51 @@
 <ion-content *ngIf="plaza != null" padding>
 
 	<ion-item>
-		<ion-label color="primary" >
-			<h2>DETALLE</h2>
-		</ion-label>
+		<h2>DETALLE</h2>
 	</ion-item>
 
-	<ion-text color="primary">
-		<h4>Titulo</h4>
-	</ion-text>
-	<ion-label >
-		{{ plaza.titulo | uppercase }}
-	</ion-label>
+	<ion-item>
+		<ion-text>
+			<h4>Titulo</h4>
+			{{ plaza.titulo | uppercase }}
+		</ion-text>
+	</ion-item>
 
-	<ion-text color="primary">
+	<ion-text>
 		<h4>Descripción</h4>
 	</ion-text>
 	<div [innerHtml]="plaza.descripcion | uppercase | nl2br" ></div>
 	
-	<ion-text color="primary">
-		<h4>Categoría</h4>
-	</ion-text>
-	<ion-label>
-		{{ categoria | uppercase }}
-	</ion-label>
-	<ion-text color="primary">
-		<h4>Empleador</h4>
-	</ion-text>
-	<ion-label>
-		{{ empleador | uppercase }}
-	</ion-label>
-	<ion-text color="primary">
-		<h4>Sector</h4>
-	</ion-text>
-	<ion-label>
-		{{ sector | uppercase }}
-	</ion-label>
-	<ion-text color="primary">
-		<h4>Fecha Límite</h4>
-	</ion-text>
-	<ion-label>
-		{{ plaza.fechaLimite }}
-	</ion-label>
-	<ion-item >
-		<a href="{{ documentUrl }}" target="_blank" color="primary" ion-button >
-			Descargar <ion-icon name="download"></ion-icon>
-		</a>
+	<ion-item href="#">
+		<ion-text>
+			<h4>Categoría</h4>
+			{{ categoria | uppercase }}
+		</ion-text>
+	</ion-item>
+	<ion-item>
+		<ion-text>
+			<h4>Empleador</h4>
+			{{ empleador | uppercase }}
+		</ion-text>
+	</ion-item>
+	<ion-item>
+		<ion-text>
+			<h4>Sector</h4>
+			{{ sector | uppercase }}
+		</ion-text>
+	</ion-item>
+	<ion-item>
+		<ion-text>
+			<h4>Fecha Límite</h4>
+			{{ plaza.fechaLimite }}
+		</ion-text>
 		
+	</ion-item>
+	
+	<ion-item *ngIf="plaza.documento != ''" >
+		<a href="{{ documentUrl }}" target="_blank" color="primary" ion-button >
+			Descargar Documento &nbsp;<ion-icon name="download"></ion-icon>
+		</a>
 	</ion-item>
 	<ion-item>
 		<ion-label>

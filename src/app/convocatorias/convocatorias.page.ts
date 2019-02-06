@@ -14,10 +14,10 @@ import { Convocatoria } from './../clases/convocatoria';
 })
 export class ConvocatoriasPage implements OnInit {
 
-	private uid:string;
-	private tipo:string;
-	private convocatorias:Convocatoria[];
+	public tipo:string;
+	public convocatorias:Convocatoria[];
 
+  private uid:string;
 
   constructor(
   	private _router:Router,

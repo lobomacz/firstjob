@@ -15,13 +15,16 @@ import { Observable, BehaviorSubject } from 'rxjs';
 })
 export class PlazasPage implements OnInit {
 
-	private uid:string;
-	private tipo:string;
-	private empleador:Empleador;
+	
+	public tipo:string;
+	public empleador:Empleador;
+  public plazas:Plaza[];
+  public filtroPlazas:boolean;
+  
+  private uid:string;
 	private empleadores:any[];
 	private plazasSubject:BehaviorSubject<string>;
-	private plazas:Plaza[];
-	private filtroPlazas:boolean;
+	
 
 
   constructor(

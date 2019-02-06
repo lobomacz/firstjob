@@ -12,8 +12,9 @@ import { Curriculum } from './../clases/curriculum';
 })
 export class CurriculumPage implements OnInit {
 
+  public curriculum:Curriculum;
+
 	private uid:string;
-	private curriculum:Curriculum;
 	private documentoTemp:string;
 	private documentoGuardado:boolean;
 	private baseUrl:string = environment.appUrl;
@@ -81,12 +82,23 @@ export class CurriculumPage implements OnInit {
 
   }
 
+  async ShowToast(mensaje:string){
+    const toast = await this.toastCtrl.create({
+      message: mensaje,
+      duration: 1500,
+      position: 'middle'
+    });
+
+    return toast.present();
+  }
+
   GuardaDocumento(){
 
   	this.cService.UpdateCandidateCurriculum(this.uid, this.curriculum).subscribe((res) => {
   		if (res.ok && res.json().count > 0) {
   			this.documentoGuardado = true;
   			this.documentoTemp = '';
+        this.ShowToast('Documento Guardado');
   		}
   	});
   }

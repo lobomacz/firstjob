@@ -5,6 +5,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { EmployerService } from './../services/employer.service';
 import { CandidateService } from './../services/candidate.service';
+import { UserService } from './../services/user.service';
 import { Usuario } from '../clases/usuario';
 import { Empleador } from '../clases/empleador';
 
@@ -30,7 +31,9 @@ export class RegistrarPage implements OnInit {
     private _router:Router, 
     private _auth:AngularFireAuth, 
     private eService:EmployerService, 
-    private cService:CandidateService) { }
+    private cService:CandidateService,
+    private uService:UserService
+    ) { }
 
   ngOnInit() {
   }
@@ -95,14 +98,18 @@ export class RegistrarPage implements OnInit {
   			this.ViewToast(mensaje);
   		});
   	}else{
-  		console.log({'Empleador':this.esEmpleador, 'Usuario':this.esUsuario});
   		this.ViewToast('Seleccione Tipo de Usuario');
   	}
   }
 
   Mensaje_Usuario_Creado(){
   	this.ViewToast(`Usuario ${this.email} Creado`).then(() => {
-		this._router.navigateByUrl('/home');
+
+      this.uService.GetCurrentUser().subscribe((u) => {
+        this.uService.usuarioSubject.next(u);
+        this._router.navigateByUrl('/home');
+      });
+
 	});
 }
 

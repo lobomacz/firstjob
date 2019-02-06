@@ -1,9 +1,236 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>administrar</ion-title>
+    <ion-title>Administrar</ion-title>
+    <ion-buttons slot="end">
+    	<ion-button [disabled]="isBeginning" (click)="Move_Prev()" >
+    		<ion-icon name="arrow-dropleft"></ion-icon>
+    	</ion-button>
+    	<ion-button [disabled]="isEnd" (click)="Move_Next()" >
+    		<ion-icon name="arrow-dropright"></ion-icon>
+    	</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
+	<ion-slides #paginas (ionSlideDidChange)="On_Slide_Changed()" pager="true" [options]="slideOpts" >
+	
+		<ion-slide >
 
+			<ion-card>
+			
+			  <ion-card-header>
+			    <h1>Categorias</h1>
+			  </ion-card-header>
+			
+			  <ion-card-content>
+			    <ion-item>
+					<ion-label position="stacked">
+						Descripción
+					</ion-label>
+					<input class="custom-input" type="text" [(ngModel)]="categoriaTemp.descripcion" required >
+				</ion-item>
+				<ion-item>
+					<ion-label position="stacked">
+						Descripción Corta
+					</ion-label>
+					<input class="custom-input" type="text" [(ngModel)]="categoriaTemp.descripcion_corta" required >
+				</ion-item>
+				<ion-item>
+					<ion-button (click)="On_Guardar_Categoria_Click()" >
+						Guardar <ion-icon name="save"></ion-icon>
+					</ion-button>
+					&nbsp;&nbsp;
+					<ion-button [disabled]="insert == true" color="danger" (click)="On_Eliminar_Categoria_Click()" >
+						Eliminar <ion-icon name="trash"></ion-icon>
+					</ion-button>
+				</ion-item>
+				<ion-list>
+					<ion-item *ngFor="let categoria of listaCategorias;index as i" (click)="On_Categoria_Click(i)" >{{ categoria.descripcion }}</ion-item>
+				</ion-list>
+			  </ion-card-content>
+			
+			</ion-card>
+			
+		</ion-slide>
+
+		<ion-slide>
+			
+			<ion-card>
+			
+			  <ion-card-header>
+			    <h1>Niveles Academicos</h1>
+			  </ion-card-header>
+			
+			  <ion-card-content>
+			    <ion-item>
+					<ion-label position="stacked">
+						Descripción
+					</ion-label>
+					<input class="custom-input" type="text" [(ngModel)]="nivelTemp.descripcion" required >
+				</ion-item>
+				<ion-item>
+					<ion-label position="stacked">
+						Siglas
+					</ion-label>
+					<input class="custom-input" type="text" [(ngModel)]="nivelTemp.siglas" required >
+				</ion-item>
+				<ion-item>
+					<ion-button (click)="On_Guardar_Nivel_Click()" >
+						Guardar <ion-icon name="save"></ion-icon>
+					</ion-button>
+					&nbsp;&nbsp;
+					<ion-button [disabled]="insert == true" color="danger" (click)="On_Eliminar_Nivel_Click()" >
+						Eliminar <ion-icon name="trash"></ion-icon>
+					</ion-button>
+				</ion-item>
+				<ion-list>
+					<ion-item *ngFor="let nivel of listaNiveles;index as idx" (click)="On_Nivel_Click(idx)" >{{ nivel.descripcion }}</ion-item>
+				</ion-list>
+			  </ion-card-content>
+			
+			</ion-card>
+
+		</ion-slide>
+
+		<ion-slide>
+			<ion-card>
+			
+			  <ion-card-header>
+			    <h1>Sectores Económicos</h1>
+			  </ion-card-header>
+			
+			  <ion-card-content>
+			    <ion-item>
+					<ion-label position="stacked">
+						Descripción
+					</ion-label>
+					<input class="custom-input" type="text" [(ngModel)]="sectorTemp.descripcion" required >
+				</ion-item>
+				<ion-item>
+					<ion-label position="stacked">
+						Descripción Corta
+					</ion-label>
+					<input class="custom-input" type="text" [(ngModel)]="sectorTemp.descripcion_corta" required >
+				</ion-item>
+				<ion-item>
+					<ion-button (click)="On_Guardar_Sector_Click($event)" >
+						Guardar <ion-icon name="save"></ion-icon>
+					</ion-button>
+					&nbsp;&nbsp;
+					<ion-button [disabled]="insert == true" color="danger" (click)="On_Eliminar_Sector_Click()" >
+						Eliminar <ion-icon name="trash"></ion-icon>
+					</ion-button>
+				</ion-item>
+				<ion-list>
+					<ion-item *ngFor="let sector of listaSectores;index as ix" (click)="On_Sector_Click(ix)" >{{ sector.descripcion }}</ion-item>
+				</ion-list>
+			  </ion-card-content>
+			
+			</ion-card>
+			
+		</ion-slide>
+
+
+		<ion-slide>
+			
+			<ion-card>
+			
+			  <ion-card-header>
+			    <h1>Spots Publicitarios</h1>
+			  </ion-card-header>
+			
+			  <ion-card-content>
+			    
+			    <ion-item>
+					<ion-label position="stacked">
+						Bloque 1
+					</ion-label>
+				</ion-item>
+				<ion-item>
+					<ion-label position="stacked">
+						Propietario
+					</ion-label>
+					<input class="custom-input" type="text" [(ngModel)]="spot1.propietario" required >
+					<ion-label position="stacked">
+						Imagen
+					</ion-label>
+					<input type="file" #sptImg1 (change)="On_Foto_Change(sptImg1, '1')" name="" value="" placeholder="" accept="image/jpeg|image/png|image/jpg" >
+				</ion-item>
+				<ion-item>
+					<ion-button (click)="On_Guardar_Spot_Click($event,'1')" >
+						<ion-icon name="save"></ion-icon>
+					</ion-button>
+					&nbsp;&nbsp;
+					<ion-button *ngIf="spot1.activado" color="danger" (click)="On_Desactivar_Spot_Click($event,'1')" > 
+						<ion-icon name="eye-off"></ion-icon>
+					</ion-button>
+					<ion-button *ngIf="!spot1.activado" color="success" (click)="On_Activar_Spot_Click($event,'1')" >
+						<ion-icon name="eye"></ion-icon>
+					</ion-button>
+				</ion-item>
+				<ion-item>
+					<ion-label position="stacked">
+						Bloque 2
+					</ion-label>
+				</ion-item>
+				<ion-item>
+					<ion-label position="stacked">
+						Propietario
+					</ion-label>
+					<input class="custom-input" type="text" [(ngModel)]="spot2.propietario" required >
+					<ion-label position="stacked">
+						Imagen
+					</ion-label>
+					<input type="file" name="" value="" #sptImg2 (change)="On_Foto_Change(sptImg2, '2')" placeholder="" accept="image/jpeg|image/png|image/jpg" >
+				</ion-item>
+				<ion-item>
+					<ion-button (click)="On_Guardar_Spot_Click($event,'2')" >
+						<ion-icon name="save"></ion-icon>
+					</ion-button>
+					&nbsp;&nbsp;
+					<ion-button *ngIf="spot2.activado" color="danger" (click)="On_Desactivar_Spot_Click($event,'2')" > 
+						<ion-icon name="eye-off"></ion-icon>
+					</ion-button>
+					<ion-button *ngIf="!spot2.activado" color="success" (click)="On_Activar_Spot_Click($event,'2')" >
+						<ion-icon name="eye"></ion-icon>
+					</ion-button>
+				</ion-item>
+				<ion-item>
+					<ion-label position="stacked">
+						Bloque 3
+					</ion-label>
+				</ion-item>
+				<ion-item>
+					<ion-label position="stacked">
+						Propietario
+					</ion-label>
+					<input class="custom-input" type="text" [(ngModel)]="spot3.propietario" required >
+					<ion-label position="stacked">
+						Imagen
+					</ion-label>
+					<input type="file" name="" value="" #sptImg3 (change)="On_Foto_Change(sptImg3, '3')" placeholder="" accept="image/jpeg|image/png|image/jpg" >
+				</ion-item>
+				<ion-item>
+					<ion-button (click)="On_Guardar_Spot_Click($event,'3')" >
+						<ion-icon name="save"></ion-icon>
+					</ion-button>
+					&nbsp;&nbsp;
+					<ion-button *ngIf="spot3.activado" color="danger" (click)="On_Desactivar_Spot_Click($event,'3')" > 
+						<ion-icon name="eye-off"></ion-icon>
+					</ion-button>
+					<ion-button *ngIf="!spot3.activado" color="success" (click)="On_Activar_Spot_Click($event,'3')" >
+						<ion-icon name="eye"></ion-icon>
+					</ion-button>
+				</ion-item>
+
+			  </ion-card-content>
+			
+			</ion-card>
+
+		</ion-slide>
+
+	</ion-slides>
 </ion-content>
+
+

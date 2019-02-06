@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ToastController, AlertController } from '@ionic/angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
@@ -11,15 +12,17 @@ import { AngularFireDatabase } from 'angularfire2/database';
 })
 export class CredencialesPage implements OnInit {
 
-	private uid:string;
-	private email:string;
-	private contrasena:string;
+	public email:string;
+	public contrasena:string;
+
+  private uid:string;
 
   constructor(
   	private toastCtrl:ToastController, 
   	private alertCtrl:AlertController,
   	private _auth:AngularFireAuth,
-  	private _db:AngularFireDatabase
+  	private _db:AngularFireDatabase,
+    private _router:Router
   	) { }
 
   ngOnInit() {
@@ -34,7 +37,7 @@ export class CredencialesPage implements OnInit {
   	const alert = await this.alertCtrl.create({
   		header: 'Agregar Credenciales',
   		subHeader: 'Credenciales de Administrador',
-  		message: 'Al crear una nueva credencial de administrador, se va a logear con la nueva credencial. ¿Desea Continuar?',
+  		message: 'Al crear una nueva credencial de administrador, ingresará con la nueva credencial. ¿Desea Continuar?',
   		buttons: [
   			{
   				text: 'No',
@@ -45,7 +48,7 @@ export class CredencialesPage implements OnInit {
   				text: 'Si',
   				cssClass: 'primary',
   				handler: () => {
-
+            this.CrearCredenciales();
   				}
   			}
   		]
@@ -73,7 +76,9 @@ export class CredencialesPage implements OnInit {
   		let fechaIngreso = new Date().toLocaleDateString();
 
   		this._db.object('/admins/'.concat(uid)).set({'fechaIngreso':fechaIngreso}).then(() => {
-  			this.ShowToast('Credenciales Creadas');
+  			this.ShowToast('Credenciales Creadas').then(() => {
+          this._router.navigateByUrl('/home');
+        });
   		});
 
   	}).catch((err) => {
