@@ -9,3 +9,13 @@
 @import '~@ionic/angular/css/text-alignment.css';
 @import '~@ionic/angular/css/text-transformation.css';
 @import '~@ionic/angular/css/flex-utils.css';
+
+//archivos sass personalizados
+@import "./sass/abstract/mixins";
+@import "./sass/abstract/variables";
+@import "./sass/abstract/extends";
+@import "./sass/components/box";
+@import "./sass/components/foto";
+@import "./sass/components/input";
+@import "./sass/components/logo";
+@import "./sass/components/spot";

@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+<ion-card >
+
+  <ion-card-header>
+    <ion-card-title>Ingreso de Usuarios</ion-card-title>
+    <ion-card-subtitle>Usuarios Registrados</ion-card-subtitle>
+  </ion-card-header>
+
+  <ion-card-content >
+    <p>Ingresa con tu correo electrónico y contraseña de la plataforma.</p>
+    <p>Si no te has registrado, da click en 'Crear Cuenta' para generar tu credencial.</p>
+  	<ion-item>
+  		<ion-input #correo="ngModel" type="email" required [(ngModel)]="email" placeholder="email@servicio.com" ></ion-input>
+  	</ion-item>
+  	<ion-item>
+  		<ion-input #clave="ngModel" type="password" required [(ngModel)]="contrasena" placeholder="Contraseña"></ion-input>
+  	</ion-item>
+  	<ion-item>
+  		<ion-button color="primary" (click)="On_Login_With_Password_Click()" enabled="correo.valid && clave.valid" >Ingresar</ion-button>&nbsp;<a [routerLink]="['/registrar']" >Crear Cuenta</a>
+  	</ion-item>
+    <ion-item>
+      <ion-button [routerLink]="['reset']" color="medium" >Renueva Tu Contraseña</ion-button>
+    </ion-item>
+    
+  </ion-card-content>
+
+</ion-card>
+<ion-card>
+
+  <ion-card-header>
+    <ion-card-title>Ingresa con tus Redes Sociales</ion-card-title>
+    <ion-card-subtitle>Usuarios Sin Credencial</ion-card-subtitle>
+  </ion-card-header>
+
+  <ion-card-content>
+    <p>Puedes validarte usando tus credenciales de <ion-text color="secondary">Twitter <ion-icon name="logo-twitter"></ion-icon></ion-text> o <ion-text color="primary">Facebook <ion-icon name="logo-facebook"></ion-icon></ion-text> para crear 
+    una nueva cuenta de usuario en la plataforma.</p>
+    <h2>Esta opción no está habilitada para empleadores.</h2>
+    <ion-list>
+      <ion-item>
+        <ion-buttons>
+          <ion-button fill="solid" color="secondary" (click)="On_Login_With_Twitter_Click()" slot="secondary">
+          Twitter <ion-icon name="logo-twitter"></ion-icon>
+        </ion-button>
+        <ion-button fill="solid" slot="primary" (click)="On_Login_With_Facebook_Click()" color="primary">
+          Facebook <ion-icon name="logo-facebook"></ion-icon>
+        </ion-button>
+        </ion-buttons>
+      </ion-item>
+    </ion-list>
+  </ion-card-content>
+
+</ion-card>
+</ion-content>

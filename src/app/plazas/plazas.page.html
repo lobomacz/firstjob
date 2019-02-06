@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Plazas</ion-title>
+    <ion-buttons *ngIf="tipo === 'empleador'" slot="end">
+	  	<ion-button (click)="On_Nuevo_Click()" >
+	  		<ion-icon name="add"></ion-icon>
+	  	</ion-button>
+	</ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+	<ion-card>
+		
+	  <ion-card-header *ngIf="(tipo === 'empleador' && empleador != null) || tipo === 'admin' ">
+	    <ion-card-title>{{ empleador != null ? empleador.nombreLargo:'Lista General' | titlecase }}</ion-card-title>
+	    <ion-card-subtitle>Plazas Publicadas</ion-card-subtitle>
+	  </ion-card-header>
+
+	  <ion-card-header *ngIf="tipo === 'usuario'">
+	    <ion-card-title>Plazas Disponibles</ion-card-title>
+	    <ion-card-subtitle></ion-card-subtitle>
+	  </ion-card-header>
+	
+	  <ion-card-content>
+	  	<ion-item *ngIf="(tipo === 'empleador' && empleador != null) || tipo === 'admin' ">
+		  	<ion-label position="floating">
+		  		Ver Plazas Cerradas
+		  	</ion-label>
+		  	<ion-toggle [(ngModel)]="filtroPlazas" #optFiltro toggle-class="toggle-calm" (ionChange)="On_Toggle_Change(optFiltro)"  value="todas" >
+		  	</ion-toggle>
+	  	</ion-item>
+	    <ion-list *ngIf="plazas != null && plazas.length > 0; else sinRegistro">
+	    	<ion-item *ngFor="let plaza of plazas" (click)="GotoDetalle(plaza._id)" >
+	    		<ion-label>
+	    			<h3>{{ plaza.titulo | titlecase }}</h3>
+	    		</ion-label>
+	    		<h4>{{ GetNombreEmpleador(plaza.idEmpleador) | uppercase }}</h4>
+	    		<ion-text slot="end" color="primary">
+		   			{{ plaza.fechaPublicacion }}
+		   		</ion-text>
+	    	</ion-item>
+	    </ion-list>
+	    <ng-template #sinRegistro>
+	    	<ion-text color="secondary">
+	    		<h2>No Existen Registros</h2>
+	    	</ion-text>
+	    </ng-template>
+	  </ion-card-content>
+	
+	</ion-card>
+
+</ion-content>

@@ -11,10 +11,16 @@ const routes: Routes = [
     path: 'home',
     loadChildren: './home/home.module#HomePageModule'
   },
-  {
-    path: 'list',
-    loadChildren: './list/list.module#ListPageModule'
-  }
+  { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
+  { path: 'registrar', loadChildren: './registrar/registrar.module#RegistrarPageModule' },
+  { path: 'userProfile', loadChildren: './user-profile/user-profile.module#UserProfilePageModule' },
+  { path: 'plazas', loadChildren: './plazas/plazas.module#PlazasPageModule' },
+  { path: 'convocatorias', loadChildren: './convocatorias/convocatorias.module#ConvocatoriasPageModule' },
+  { path: 'curriculum', loadChildren: './curriculum/curriculum.module#CurriculumPageModule' },
+  { path: 'credenciales', loadChildren: './credenciales/credenciales.module#CredencialesPageModule' },
+  { path: 'administrar', loadChildren: './administrar/administrar.module#AdministrarPageModule' },
+  { path: 'error', loadChildren: './error/error.module#ErrorPageModule' },
+  { path: '**', loadChildren: './error/error.module#ErrorPageModule' }
 ];
 
 @NgModule({

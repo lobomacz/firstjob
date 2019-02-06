@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Convocatorias</ion-title>
+    <ion-buttons *ngIf="tipo === 'empleador' || tipo === 'admin'" slot="end">
+	  	<ion-button (click)="On_Nuevo_Click()" >
+	  		<ion-icon name="add"></ion-icon>
+	  	</ion-button>
+	</ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+	<ion-card>
+	
+	  <ion-card-header>
+	    <ion-card-title>Convocatorias</ion-card-title>
+	    <ion-card-subtitle color="primary">Noticias y Eventos</ion-card-subtitle>
+	  </ion-card-header>
+	
+	  <ion-card-content *ngIf="convocatorias != null && convocatorias.length > 0; else sinRegistros">
+	  	<h3>Rango de Fechas</h3>
+	  	<ion-grid>
+  			<ion-row>
+  				<ion-col>
+  					<ion-label position="fixed">
+			  			Fecha Inicial
+			  		</ion-label>
+			  		<ion-datetime displayFormat="DD/MM/YYYY"></ion-datetime>
+  				</ion-col>
+  				<ion-col>
+  					<ion-label position="fixed">
+			  			Fecha Final
+			  		</ion-label>
+			  		<ion-datetime displayFormat="DD/MM/YYYY"></ion-datetime>
+  				</ion-col>
+  				<ion-col>
+  					<ion-button color="primary">
+  						Buscar <ion-icon name="search"></ion-icon>
+  					</ion-button>
+  				</ion-col>
+  			</ion-row>
+  		</ion-grid>
+	  	<ion-item>
+	  		Titulo
+	  		<ion-label slot="end">
+	  			Fecha Pub.
+	  		</ion-label>
+	  	</ion-item>
+	    <ion-list>
+	    	<ion-item *ngFor="let convocatoria of convocatorias" (click)="GotoDetail(convocatoria._id)" >
+	    		<ion-text color="primary">
+	    			<h2>{{ convocatoria.titulo | titlecase }}</h2>
+	    		</ion-text>
+	    		<ion-label slot="end">
+	    			{{ convocatoria.fechaPublicacion }}
+	    		</ion-label>
+	    	</ion-item>
+	    </ion-list>
+	  </ion-card-content>
+
+	  <ng-template #sinRegistros>
+	  	<ion-card-content>
+	  		<h2>No Hay Registros</h2>
+	  	</ion-card-content>
+	  </ng-template>
+	
+	</ion-card>
+</ion-content>

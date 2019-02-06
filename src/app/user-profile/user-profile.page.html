@@ -1,0 +1,193 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Perfil de {{ tipoUsuario | titlecase }}</ion-title>
+    <ion-buttons slot="end">
+	  	<ion-button (click)="UserPopover()" >
+	  		<ion-icon name="more"></ion-icon>
+	  	</ion-button>
+	  </ion-buttons>
+  </ion-toolbar>
+  
+</ion-header>
+
+<ion-content padding>
+
+<ion-card *ngIf="sinPerfil">
+
+  <ion-card-header>
+    <ion-card-title>Sin Perfil de {{ tipoUsuario | titlecase }}</ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    <p>No ha creado un perfil para su usuario o empresa.</p>
+    <p>El perfil debe tener, al menos, el primer nombre, primer apellido y dirección, en caso de ser persona natural y una dirección, teléfono y representante, en caso de ser empleador.</p>
+    <p>Presione el icono <ion-icon name="more"></ion-icon> para ver el menú de creación de perfil.</p>
+  </ion-card-content>
+
+</ion-card>
+  
+<ion-card *ngIf="tipoUsuario === 'usuario' && usuario != null">
+  <div class="foto-container">
+    <ion-img [src]="imageFile"></ion-img>
+  </div>
+	
+  <ion-card-header>
+    <ion-card-title>{{ usuario.primerNombre + ' ' + usuario.primerApellido | uppercase }}</ion-card-title>
+    <ion-card-subtitle>{{ usuario.email }}</ion-card-subtitle>
+  </ion-card-header>
+
+  <ion-card-content>
+
+    <ion-item *ngIf="curriculum != null" >
+      <a target="_blank" href="{{ curriculum.documentoUrl }}">
+        Descargar Curriculum&nbsp;<ion-icon name="download"></ion-icon>
+      </a>
+    </ion-item>
+    <ion-item>
+      <ion-text>
+        <h2>Fecha de Nacimiento</h2>
+        {{ usuario.fechaNacimiento }}
+      </ion-text>
+    </ion-item>
+    <ion-item>
+      
+    </ion-item>
+  	
+	<ion-text>
+		<h2>Dirección</h2>
+	</ion-text>
+  <div>
+    {{ usuario.direccion | nl2br | uppercase }}
+  </div>
+  	
+	<ion-text><h2>Teléfonos</h2></ion-text>
+	<ion-text *ngFor="let tel of usuario.telefonos">
+    <p>
+      <ion-icon name="{{ tel.tipo }}"></ion-icon>   {{ tel.numero }}
+    </p>
+	</ion-text>
+
+  <ion-item>
+    <ion-text>
+      <h2>Profesión</h2>
+      {{ usuario.profesion | uppercase }}
+    </ion-text>
+  </ion-item>
+	
+	<ion-item>
+    <ion-text>
+      <h2>Nivel Académico</h2>
+      {{ userNivel | uppercase }}
+    </ion-text>
+  </ion-item>
+	
+	<ion-item>
+    <ion-text>
+      <h2>Sector de Desarrollo</h2>
+      {{ userSector | uppercase }}
+    </ion-text>
+  </ion-item>
+	
+	<ion-item>
+    <ion-text>
+      <h2>Redes Sociales</h2>
+    </ion-text>
+  </ion-item>
+  <ion-item>
+    <ion-text>
+      <h2>Facebook:</h2>
+    </ion-text>
+    {{ usuario.facebook }}
+  </ion-item>
+  <ion-item>
+    <ion-text>
+      <h2>Twitter:</h2>
+    </ion-text>
+    {{ usuario.twitter }}
+  </ion-item>
+	<ion-item>
+    <ion-text>
+      <h2>LinkedIn:</h2>
+    </ion-text>
+    {{ usuario.linkedin }}
+  </ion-item>
+	<ion-item>
+    <ion-text>
+      <h2>Etnia</h2>
+      {{ userEtnia | uppercase }}
+    </ion-text>
+  </ion-item>
+  <ion-item>
+    <ion-text>
+      <h2>Sexo</h2>
+      {{ usuario.sexo | uppercase }}
+    </ion-text>
+  </ion-item>
+  
+  </ion-card-content>
+
+</ion-card>
+
+<ion-card *ngIf="tipoUsuario === 'empleador' && empleador != null">
+
+  <ion-card-header>
+    <ion-card-title>{{ empleador.nombreCorto }}</ion-card-title>
+    <ion-card-subtitle>{{ empleador.nombreLargo }}</ion-card-subtitle>
+  </ion-card-header>
+  <div class="foto-container">
+    <ion-img [src]="imageFile"></ion-img>
+  </div>
+  <ion-card-content>
+
+    <ion-text color="primary">
+      <h2>Dirección</h2>
+    </ion-text>
+    <div>
+      {{ empleador.direccion | nl2br }}
+    </div>
+    <ion-item>
+      <ion-text>
+        <h2>Teléfono</h2>
+      </ion-text>
+      {{ empleador.telefono }}
+    </ion-item>
+    <ion-item>
+      <ion-text>
+        <h2>Correo-e</h2>
+      </ion-text>
+      {{ empleador.email }}
+    </ion-item>
+    <ion-item>
+      <ion-text>
+        <h2>Dirección Web</h2>
+      </ion-text>
+      {{ empleador.web }}
+    </ion-item>
+      
+    <ion-item>
+      <ion-label *ngIf="empleador.representante != null" text-wrap>
+        <ion-text>
+          <h2>Representante</h2>
+        </ion-text>
+        <p>{{ empleador.representante.nombre | uppercase }}</p>
+        <p>{{ empleador.representante.email }}</p>
+        <p>{{ empleador.representante.telefono }}</p>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label text-wrap>
+        <ion-text>
+          <h2>Enlaces</h2>
+        </ion-text>
+        <p>Facebook: {{ empleador.facebook }}</p>
+        <p>Twitter: {{ empleador.twitter }}</p>
+        <p>LinkedIn: {{ empleador.linkedin }}</p>
+      </ion-label>
+    </ion-item>
+    <h4>Sector Económico</h4>
+    <p>{{ userSector | uppercase }}</p>
+  </ion-card-content>
+
+</ion-card>
+
+</ion-content>

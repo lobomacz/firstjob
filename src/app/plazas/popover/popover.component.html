@@ -1,0 +1,9 @@
+
+<ion-list>
+	<ion-item *ngFor="let opcion of opciones" (click)="Dismiss()" [routerLink]="[opcion.link]" >
+		{{ opcion.title | uppercase }}  <ion-icon slot="end" name="{{ opcion.icon }}"></ion-icon>
+	</ion-item>
+	<ion-item *ngIf="detalle == true" (click)="On_Cerrar_Plaza()" >
+		Eliminar Plaza  <ion-icon slot="end" name="close"></ion-icon>
+	</ion-item>
+</ion-list>

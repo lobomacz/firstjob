@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Aplicantes</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+	<ion-card>
+	
+	  <ion-card-header>
+	    <ion-card-title>Lista de Aplicantes</ion-card-title>
+	  </ion-card-header>
+	
+	  <ion-card-content>
+	    <ion-list >
+	    	<ion-item *ngFor="let aplicante of aplicantes" [routerLink]="['/userProfile/','ver', aplicante._id]" >
+	    		<ion-avatar>
+	    			<img [src]="baseUrl + aplicante.foto" alt="">
+	    		</ion-avatar>
+	    		&nbsp;&nbsp;&nbsp;
+	    		<ion-label>
+	    			{{ aplicante.primerNombre + ' ' + aplicante.primerApellido | uppercase }}
+	    		</ion-label>
+	    		<ion-text color="primary">
+	    			<h5>{{ aplicante.profesion }}</h5>
+	    		</ion-text>
+	    	</ion-item>
+	    </ion-list>
+	  </ion-card-content>
+	
+	</ion-card>
+</ion-content>

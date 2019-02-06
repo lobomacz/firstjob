@@ -1,0 +1,98 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ idPlaza != null ? 'Edición':'Ingreso' }} de Plaza</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+	<ion-grid *ngIf="plaza != null">
+		<ion-row>
+			<ion-col size="6" >
+				<ion-label position="fixed" color="primary">
+					Titulo
+				</ion-label>
+				<ion-input maxlength="50" [(ngModel)]="plaza.titulo" type="text" required ></ion-input>
+			</ion-col>
+			<ion-col>
+				<ion-label position="fixed" color="primary">
+					Sector
+				</ion-label>
+				<ion-select [(ngModel)]="plaza.sector" >
+					<ion-select-option *ngFor="let sector of sectores" value="{{ sector._id }}" >{{ sector.descripcion_corta }}</ion-select-option>
+				</ion-select>
+			</ion-col>
+			<ion-col>
+				<ion-label position="fixed" color="primary">
+					Categoría
+				</ion-label>
+				<ion-select [(ngModel)]="plaza.categoria" >
+					<ion-select-option *ngFor="let categoria of categorias" value="{{ categoria._id }}" >
+						{{ categoria.descripcion_corta }}
+					</ion-select-option>
+				</ion-select>
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col size="8">
+				<ion-label position="fixed" color="primary">
+					Descripción
+				</ion-label>
+				<ion-textarea [(ngModel)]="plaza.descripcion" rows="6" cols="10"></ion-textarea>
+			</ion-col>
+			<ion-col>
+				<ion-label position="fixed" color="primary">
+					Fecha Límite(dia/mes/año)
+				</ion-label>
+				<ion-datetime [(ngModel)]="plaza.fechaLimite" displayFormat="DD/MM/YYYY" ></ion-datetime>
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col>
+				<ion-label position="fixed" color="primary">
+					Documento(opcional)
+				</ion-label>
+				<input type="file" name="" #docFile (change)="On_File_Change(docFile)" accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" value="" placeholder="Documento Plaza">
+				<ion-item *ngIf="documentUrl != null" >
+					<a href="{{ documentUrl }}" >
+					Descargar Documento 
+				</a>  <ion-icon name="download"></ion-icon>
+				</ion-item>
+				
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col>
+				<ion-label color="secondary">
+					Datos del Contacto
+				</ion-label>
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col>
+				<ion-label position="fixed" color="primary">
+					Nombre
+				</ion-label>
+				<ion-input [(ngModel)]="plaza.contacto.nombe" type="text" ></ion-input>
+			</ion-col>
+			<ion-col>
+				<ion-label position="fixed" color="primary">
+					Teléfono
+				</ion-label>
+				<ion-input [(ngModel)]="plaza.contacto.telefono" type="tel" ></ion-input>
+			</ion-col>
+			<ion-col>
+				<ion-label position="fixed" color="primary">
+					Email
+				</ion-label>
+				<ion-input [(ngModel)]="plaza.contacto.email" type="email" ></ion-input>
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col>
+				<ion-button (click)="On_Guardar_Click()" >
+					Guardar <ion-icon name="save"></ion-icon>
+				</ion-button>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+</ion-content>

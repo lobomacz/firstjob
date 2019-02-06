@@ -1,0 +1,8 @@
+ion-input, ion-textarea, ion-select, ion-datetime {
+	@include estilo-input;
+}
+
+.custom-input {
+	width: 100%;
+	@include estilo-input;
+}

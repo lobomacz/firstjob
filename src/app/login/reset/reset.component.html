@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Renovación de Contraseña</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+	<ion-card>
+	
+	  <ion-card-header>
+	  	<ion-card-subtitle>Renovación de Contraseña</ion-card-subtitle>
+	    <ion-card-title>{{ titulo }}</ion-card-title>
+	  </ion-card-header>
+	
+	  <ion-card-content>
+	  	<p>Ingrese su dirección de correo registrada y presione &#34;Enviar&#34;</p>
+	  	<p>Recibirá un mensaje en su correo con un link para restablecer su contraseña.</p>
+	    <ion-item>
+	    	<ion-input #email="ngModel" type="email" [(ngModel)]="correo" placeholder="email@service.com" required ></ion-input>
+	    </ion-item>
+	    <ion-item>
+	    	<ion-button (click)="EnviarCorreo()" color="warning">
+	    		Enviar <ion-icon name="jet"></ion-icon>
+	    	</ion-button>
+	    </ion-item>
+	  </ion-card-content>
+	
+	</ion-card>
+</ion-content>

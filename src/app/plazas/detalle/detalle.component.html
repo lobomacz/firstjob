@@ -1,0 +1,80 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title *ngIf="plaza != null" >Plaza {{ plaza.abierta ? 'Disponible':'Cerrada' }}</ion-title>
+    <ion-buttons *ngIf="tipo === 'empleador'" slot="end">
+	  	<ion-button (click)="PlazaPopover()" >
+	  		<ion-icon name="more"></ion-icon>
+	  	</ion-button>
+	</ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="plaza != null" padding>
+
+	<ion-item>
+		<h2>DETALLE</h2>
+	</ion-item>
+
+	<ion-item>
+		<ion-text>
+			<h4>Titulo</h4>
+			{{ plaza.titulo | uppercase }}
+		</ion-text>
+	</ion-item>
+
+	<ion-text>
+		<h4>Descripción</h4>
+	</ion-text>
+	<div [innerHtml]="plaza.descripcion | uppercase | nl2br" ></div>
+	
+	<ion-item href="#">
+		<ion-text>
+			<h4>Categoría</h4>
+			{{ categoria | uppercase }}
+		</ion-text>
+	</ion-item>
+	<ion-item>
+		<ion-text>
+			<h4>Empleador</h4>
+			{{ empleador | uppercase }}
+		</ion-text>
+	</ion-item>
+	<ion-item>
+		<ion-text>
+			<h4>Sector</h4>
+			{{ sector | uppercase }}
+		</ion-text>
+	</ion-item>
+	<ion-item>
+		<ion-text>
+			<h4>Fecha Límite</h4>
+			{{ plaza.fechaLimite }}
+		</ion-text>
+		
+	</ion-item>
+	
+	<ion-item *ngIf="plaza.documento != ''" >
+		<a href="{{ documentUrl }}" target="_blank" color="primary" ion-button >
+			Descargar Documento &nbsp;<ion-icon name="download"></ion-icon>
+		</a>
+	</ion-item>
+	<ion-item>
+		<ion-label>
+			Aplicantes
+		</ion-label>
+		<ion-badge color="tertiary" >
+			{{ plaza.aplicantes.length }}
+		</ion-badge>
+	</ion-item>
+	<ion-item *ngIf="tipo === 'usuario' && !esAplicante" >
+		<ion-button (click)="On_Aplicar_Click()" >
+			Aplicar  <ion-icon name="heart"></ion-icon>
+		</ion-button>
+	</ion-item>
+	<ion-item *ngIf="tipo === 'usuario' && esAplicante" >
+		<ion-button color="danger" (click)="On_Retirar_Click()" >
+			Cancelar Aplicación  <ion-icon name="heart-dislike"></ion-icon>
+		</ion-button>
+	</ion-item>
+	
+</ion-content>
